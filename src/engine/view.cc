@@ -87,9 +87,7 @@ bool View::IsVisible(GameObject *obj){
 
 void View::RenderObject(GameObject* obj, const glm::mat4& parent_matrix){
     glBindTexture(GL_TEXTURE_2D, tex_[obj->GetType()]);
-
-:q
-:q
+	//
 	//Create the transformation matrix
 	float s = obj->GetScale();
     glm::mat4 scaling_matrix = glm::scale(glm::mat4(1.0f), glm::vec3(s, s, 1.0));
