@@ -10,6 +10,7 @@
 #include "powerup.hh"
 #include "shield.hh"
 #include "shield_collectible.hh"
+#include "weapon.hh"
 #include <GLFW/glfw3.h>
 #include <glm/fwd.hpp>
 #include <iostream>
@@ -40,10 +41,10 @@ Game::~Game(){
 
 void Game::InitPrototypes(){
 	//Init effects
-	effect_prototypes_[BASIC_EXPLOSION] = new Effect(EXPLOSION, glm::vec3(0), this);
+	effect_prototypes_[EFFECT_EXPLOSION] = new Effect(EXPLOSION, glm::vec3(0), this);
 
 	//Init Projectiles
-	projectile_prototypes_[BASIC_BULLET] = new Projectile(BULLET, glm::vec3(0), 0, this);
+	projectile_prototypes_[PROJECTILE_BULLET] = new Projectile(BULLET, glm::vec3(0), 0, this);
 }
 
 //Init the initial game state
@@ -65,6 +66,7 @@ int Game::Init(){
 	player_ = new Entity(SHIP, glm::vec3(0,0,0), this, 0.45); 
 	Blade* b = new Blade(BLADE, glm::vec3(0, 0, 0),this);
 	player_->AddChild(b);
+	player_->AddWeapon(new Weapon(BULLET, PROJECTILE_BULLET, glm::vec3(0), this));
 
 	player_->AddChild(new Shield(SHIELD, glm::vec3(2,0,0), glm::vec3(0,0,0), this, 2*M_PI/3));
 	player_->AddChild(new Shield(SHIELD, glm::vec3(2,0,0), glm::vec3(0,0,0), this, 4*M_PI/3));

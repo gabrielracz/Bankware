@@ -37,10 +37,9 @@ void View::Update(){
 	shader_.SetUniformMat4("view_matrix", camera_matrix_);
 
 	//Capture mouse cursor movement
-	MouseMovementInput();
+
 
 	//Draw game objects
-
 	std::vector<Entity*> entities = controller_->GetEntities();
 	for(auto obj : entities){
 		if(IsVisible(obj))
@@ -71,10 +70,10 @@ void View::Update(){
 			RenderObject(bkg);
 	}
 
-	//Draw GUi
-    
+	//Draw buffers
 	glfwSwapBuffers(window_);
 	glfwPollEvents();
+	MouseMovementInput();
 }
 
 //Check coordinates against the camera matrix to see if it is currently visible

@@ -28,6 +28,7 @@ set(HDRS
 	include/shield.hh
 	include/powerup.hh
 	include/buoy.hh
+	include/weapon.hh
 )
  
 set(SRCS
@@ -46,6 +47,7 @@ set(SRCS
 	src/objects/shield_collectible.cc
 	src/objects/shield.cc
 	src/objects/powerup.cc
+	src/objects/weapons/weapon.cc
 	src/entities/entity.cc
 	src/entities/enemy.cc
 	src/entities/buoy.cc

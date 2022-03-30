@@ -13,16 +13,12 @@ Entity::Entity(GLuint type, const glm::vec3& position, Game* game, float speed, 
 	velocity_ = glm::vec3(0);
 	speed_ = speed;
 	hitbox_ =  Hitbox(&position_, scale_*0.6);
-	shoot_cooldown_ = 0.1f;
-	powered_up_ = false;
 	mass_ = mass;
 
-	explosion_effect_ = BASIC_EXPLOSION;
-	projectile_type_ = BASIC_BULLET;
+	explosion_effect_ = EFFECT_EXPLOSION;
 }
 
 void Entity::Update(float dt){
-	if(shoot_timer_ > 0) shoot_timer_ -= dt;
 
 	//AIR RESISTANCE
 	//Proptional to v^2 * some constants such as fluid density and area...
@@ -47,6 +43,12 @@ void Entity::SetEffect(GLuint eff){
 	explosion_effect_ = eff;
 }
 
+void Entity::AddWeapon(Weapon *wpn){
+	wpn->Attach(&position_, &angle_);
+	AddChild(wpn);
+	weapons_.push_back(wpn);
+}
+
 void Entity::Thrust(float dt){
 	acceleration_ = GetAngleVector() * speed_ * (dt*50);
 	//acceleration_ = glm::rotate(glm::vec3(0, speed_, 0), angle_, glm::vec3(0,0,1))*(dt*45);
@@ -58,14 +60,9 @@ void Entity::Break(){
 }
 
 void Entity::Shoot(){
-	if(shoot_timer_ > 0) return;
-
-	game_->SpawnBullet(projectile_type_, position_, angle_);
-	if(powered_up_){
-		game_->SpawnBullet(projectile_type_, position_, angle_ + 0.3);
-		game_->SpawnBullet(projectile_type_, position_, angle_ - 0.3);
+	for(Weapon* w : weapons_){
+		w->Shoot();
 	}
-	shoot_timer_ = shoot_cooldown_;
 }
 
 void Entity::Turn(int d, float dt){
@@ -131,6 +128,10 @@ bool Entity::CheckShield(){
 
 void Entity::PowerUp(){
 	draw_inverted_ = true;
-	powered_up_ = true;
+	if(!weapons_.empty()){
+		Weapon* w = weapons_[0];
+		w->AddShootingAngle(M_PI/8);
+		w->AddShootingAngle(-M_PI/8);
+	}
 }
 

@@ -15,11 +15,11 @@
 #define NUM_PROJECTILES 10
 
 enum EffectTypes {
-	BASIC_EXPLOSION = 0
+	EFFECT_EXPLOSION = 0
 };
 
 enum ProjectileTypes {
-	BASIC_BULLET = 0
+	PROJECTILE_BULLET = 0
 };
 
 class Game {
