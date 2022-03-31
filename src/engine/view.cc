@@ -66,7 +66,7 @@ void View::Update(){
 
 	std::vector<GameObject*> backgrounds = controller_->GetBackgrounds();
 	for(auto bkg : backgrounds){
-		if(IsVisible(bkg))
+		if(IsVisible(bkg, 0))
 			RenderObject(bkg);
 	}
 
@@ -79,7 +79,7 @@ void View::Update(){
 //Check coordinates against the camera matrix to see if it is currently visible
 //If the position of the object relative to camera lies between 1 and -1
 //on bot x and y it is visible in the current window
-bool View::IsVisible(GameObject *obj){
+bool View::IsVisible(GameObject *obj, float f){
 	glm::vec3 p = -camera_matrix_ * glm::vec4(obj->GetPosition(), 1.0);
 	return (p.x < (1 + camera_zoom_)) && (p.x > (-1 - camera_zoom_)) && (p.y < (1 + camera_zoom_) && p.y > (-1 - camera_zoom_));
 }
@@ -116,9 +116,8 @@ void View::RenderObject(GameObject* obj, const glm::mat4& parent_matrix){
 
 void View::MouseMovementInput(){
 	if (glfwGetWindowAttrib(window_, GLFW_HOVERED)){
-		glm::vec2 cursor;
-		GetCursorPos(&cursor);
-		controller_->PlayerLook(cursor);
+		glm::vec3 cursor;
+		controller_->PlayerLook(GetCursorPos(&cursor), cursor);
 	}
 }
 
@@ -131,7 +130,7 @@ void View::KeyInput(GLFWwindow* window, int key, int scancode, int action, int m
 		glfwWindowShouldClose(window);
 		controller->HandleQuit();
 	}
-	if (key == GLFW_KEY_W){
+	if (key == GLFW_KEY_W || key == GLFW_KEY_LEFT_SHIFT){
 		if(action == GLFW_PRESS){
 			controller->HandleThrust(true);
 		}else if (action == GLFW_RELEASE){
@@ -180,7 +179,7 @@ void View::MouseInput(GLFWwindow* window, int key, int action, int mods){
 	}
 }
 
-bool View::GetCursorPos(glm::vec2 *vec){
+bool View::GetCursorPos(glm::vec3 *vec){
 	double x, y;
 	glfwGetCursorPos(window_, &x, &y);
 	int window_width, window_height;
@@ -194,7 +193,7 @@ bool View::GetCursorPos(glm::vec2 *vec){
 	float aspect_ratio = w / h;
 	float cursor_x_pos = ((2.0f * x - w) * aspect_ratio) / (w * camera_zoom_);
 	float cursor_y_pos = (-2.0f * y + h) / (h * camera_zoom_);
-	*vec = glm::vec2(cursor_x_pos, cursor_y_pos);
+	*vec = glm::vec3(cursor_x_pos, cursor_y_pos, 0);
 	return true;
 }
 int View::Init(){

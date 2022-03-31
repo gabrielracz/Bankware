@@ -14,6 +14,9 @@ private:
 	int apply_turn_;
 	bool apply_right_turn_;
 	bool apply_left_turn_;
+	bool mouse_look_;
+	glm::vec3 mousepos;
+
 	std::string title_;
 public:
 	View* view_;
@@ -30,7 +33,7 @@ public:
 	void HandleLeftTurn(bool t);
 	void HandleBreak(bool t);
 	void HandleShoot(bool t);
-	void PlayerLook(glm::vec2& v);
+	void PlayerLook(bool t, glm::vec3& v);
 
 	inline std::vector<Entity*>& GetEntities(){return game_->GetEntities();};
 	inline std::vector<GameObject*>& GetBackgrounds(){return game_->GetBackgrounds();};

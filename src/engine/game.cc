@@ -66,7 +66,8 @@ int Game::Init(){
 	player_ = new Entity(SHIP, glm::vec3(0,0,0), this, 0.45); 
 	Blade* b = new Blade(BLADE, glm::vec3(0, 0, 0),this);
 	player_->AddChild(b);
-	player_->AddWeapon(new Weapon(BULLET, PROJECTILE_BULLET, glm::vec3(0), this));
+	player_->AddWeapon(new Weapon(BULLET, PROJECTILE_BULLET, glm::vec3(0.5, 0.5, 0), this));
+	player_->AddWeapon(new Weapon(BULLET, PROJECTILE_BULLET, glm::vec3(-0.5, 0.5, 0), this));
 
 	player_->AddChild(new Shield(SHIELD, glm::vec3(2,0,0), glm::vec3(0,0,0), this, 2*M_PI/3));
 	player_->AddChild(new Shield(SHIELD, glm::vec3(2,0,0), glm::vec3(0,0,0), this, 4*M_PI/3));
@@ -351,7 +352,11 @@ void Game::PlayerShoot(){
 	player_->Shoot();
 }
 
-void Game::PlayerLook(glm::vec2& v){
+void Game::PlayerLook(glm::vec3& v, float dt){
+	player_->TurnTowards(v, dt);
+}
+
+void Game::PlayerLook(glm::vec3& v){
 	player_->LookAtPoint(v);
 }
 

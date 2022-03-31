@@ -1,6 +1,8 @@
 #include "weapon.hh"
 #include "game_object.hh"
 #include "game.hh"
+#include <glm/fwd.hpp>
+#include <glm/gtx/transform.hpp>
 #include <iostream>
 
 Weapon::Weapon(GLuint weapon_type, GLuint projectile_type, const glm::vec3& position, Game* game, glm::vec3* parent_position, float* parent_angle, float cooldown)
@@ -26,7 +28,9 @@ void Weapon::Shoot(){
 	if(shot_timer_ > 0) return;
 
 	for(float a : shooting_angles_){
-		game_->SpawnBullet(projectile_type_, *parent_position_ + position_, *parent_angle_ + a);
+		//This is fine, doesnt have significant performance impact
+		glm::vec3 rotated_pos = glm::rotate(position_, *parent_angle_, glm::vec3(0,0,1));
+		game_->SpawnBullet(projectile_type_, *parent_position_ + rotated_pos, *parent_angle_ + a);
 	}
 
 	shot_timer_ = shot_cooldown_;

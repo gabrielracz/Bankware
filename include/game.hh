@@ -62,7 +62,8 @@ public:
 	void PlayerTurn(int t, float dt);
 	void PlayerBreak();
 	void PlayerShoot();
-	void PlayerLook(glm::vec2& v);
+	void PlayerLook(glm::vec3& v, float dt);
+	void PlayerLook(glm::vec3& v);
 
 	Entity* GetPlayer();
 	glm::vec3& GetPlayerPosition();

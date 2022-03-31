@@ -57,8 +57,8 @@ public:
 	void SetAllTextures(void);
 	void SetTitle(const char* title);
 	void RenderObject(GameObject* obj, const glm::mat4& parent_matrix = glm::mat4(1));
-	bool IsVisible(GameObject* obj);
-	bool GetCursorPos(glm::vec2 *vec);
+	bool IsVisible(GameObject* obj, float f = 1.0f);
+	bool GetCursorPos(glm::vec3 *vec);
 	void MouseMovementInput();
 };
 

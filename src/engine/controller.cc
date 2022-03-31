@@ -16,6 +16,8 @@ Controller::Controller(){
 	apply_break_ = false;
 	apply_shoot_ = false;
 	apply_turn_ = 0;
+	mouse_look_ = false;
+
 }
 
 int Controller::Start(){
@@ -42,6 +44,8 @@ int Controller::Start(){
 
 		if(apply_right_turn_) game_->PlayerTurn(1, delta_time);
 		else if(apply_left_turn_) game_->PlayerTurn(-1, delta_time);
+
+		if(mouse_look_) game_->PlayerLook(mousepos, delta_time);
 
 		if(apply_shoot_) game_->PlayerShoot();
 
@@ -84,6 +88,8 @@ void Controller::HandleLeftTurn(bool t){
 		apply_left_turn_ = t;
 }
 
-void Controller::PlayerLook(glm::vec2& v){
+void Controller::PlayerLook(bool t, glm::vec3& v){
+	//mouse_look_ = t;
+	//mousepos = v;
 	game_->PlayerLook(v);
 }

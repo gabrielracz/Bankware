@@ -29,9 +29,10 @@ public:
 	virtual void Update(float dt);
 	
 	void Turn(int d, float dt);
+	void TurnTowards(glm::vec3& t, float dt);
 	void Thrust(float dt); 
 	void Break();
-	void LookAtPoint(glm::vec2);
+	void LookAtPoint(glm::vec3);
 	void Shoot();
 	bool CheckCollision(Hitbox& hbox);
 	void Explode();

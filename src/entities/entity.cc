@@ -5,6 +5,7 @@
 #include <glm/ext/quaternion_geometric.hpp>
 #include <glm/ext/scalar_constants.hpp>
 #include <iostream>
+#include <math.h>
 #define DRAG_CONSTANT 5.0f
 
 Entity::Entity(GLuint type, const glm::vec3& position, Game* game, float speed, float mass)
@@ -73,10 +74,21 @@ void Entity::Turn(int d, float dt){
 	}
 }
 
-void Entity::LookAtPoint(glm::vec2 target)
+void Entity::TurnTowards(glm::vec3 &t, float dt){
+	float perp_angle = angle_ + M_PI/2 - 0.15;
+	glm::vec3 perp = glm::rotate(glm::vec3(0,1,0), perp_angle, glm::vec3(0,0,1));
+	float dp = glm::dot(perp, t);
+	float a = acos(dp/(glm::length2(perp) * glm::length2(t)));
+	if(a > 0.2)
+		Turn(dp, dt);
+	else
+		LookAtPoint(t);
+}
+
+void Entity::LookAtPoint(glm::vec3 target)
 {
 	float angle = glm::atan(target.y, target.x);
-	angle_ = angle - glm::pi<float>() / 2;
+	angle_ = angle - M_PI_2;
 }
 
 void Entity::SetScale(float s){
@@ -128,8 +140,7 @@ bool Entity::CheckShield(){
 
 void Entity::PowerUp(){
 	draw_inverted_ = true;
-	if(!weapons_.empty()){
-		Weapon* w = weapons_[0];
+	for(Weapon* w : weapons_){
 		w->AddShootingAngle(M_PI/8);
 		w->AddShootingAngle(-M_PI/8);
 	}
