@@ -66,8 +66,16 @@ int Game::Init(){
 	player_ = new Entity(SHIP, glm::vec3(0,0,0), this, 0.45); 
 	Blade* b = new Blade(BLADE, glm::vec3(0, 0, 0),this);
 	player_->AddChild(b);
-	player_->AddWeapon(new Weapon(BULLET, PROJECTILE_BULLET, glm::vec3(0.5, 0.5, 0), this));
-	player_->AddWeapon(new Weapon(BULLET, PROJECTILE_BULLET, glm::vec3(-0.5, 0.5, 0), this));
+	
+	Weapon* right_cannon = new Weapon(BULLET, PROJECTILE_BULLET, glm::vec3(1, 0.5, 0), this);
+	right_cannon->SetAimable(true);
+	player_->AddWeapon(right_cannon);
+	Weapon* left_cannon = new Weapon(BULLET, PROJECTILE_BULLET, glm::vec3(-1, 0.5, 0), this);
+	left_cannon->SetAimable(true);
+	player_->AddWeapon(left_cannon);
+	//Weapon* booty_cannon = new Weapon(BULLET, PROJECTILE_BULLET, glm::vec3(0.0, -1, 0), this);
+	//booty_cannon->SetAngle(M_PI);
+	//player_->AddWeapon(booty_cannon);
 
 	player_->AddChild(new Shield(SHIELD, glm::vec3(2,0,0), glm::vec3(0,0,0), this, 2*M_PI/3));
 	player_->AddChild(new Shield(SHIELD, glm::vec3(2,0,0), glm::vec3(0,0,0), this, 4*M_PI/3));

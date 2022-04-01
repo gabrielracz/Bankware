@@ -24,7 +24,7 @@ private:
 	std::string window_title_;
 	unsigned int window_width_;
 	unsigned int window_height_;
-	glm::vec3 background_color_;
+	glm::vec4 background_color_;
 	GLFWwindow *window_;
 	
 	//Camera

@@ -12,16 +12,21 @@ protected:
 	float shot_cooldown_;
 	float shot_timer_;
 
+	bool aimable_;
+
 	GLuint projectile_type_;
 public:
 	Weapon(GLuint weapon_type, GLuint projectile_type, const glm::vec3& position, Game* game, glm::vec3* parent_position = nullptr, float* parent_angle = nullptr, float cooldown = 0.1f);
 	virtual void Update(float delta_time) override;
 	virtual void Shoot();
 
+	void SetAngle(float angle);
+	void AimAt(glm::vec3& target);
 	void Attach(glm::vec3* p_position, float* p_angle);
 	void AddShootingAngle(float angle);
 	void SetCooldown(float cd);
 	void ResetCooldown();
+	void SetAimable(bool t);
 };
 
 #endif

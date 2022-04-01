@@ -15,7 +15,7 @@ View::View(const std::string& title, unsigned int window_width, unsigned int win
 	window_width_ = window_width;
 	window_height_ = window_height;
 	controller_ = controller;
-	background_color_ = glm::vec3(0, 0, 0);
+	background_color_ = glm::vec4(0, 0, 0, 0);
 }
 
 
@@ -30,7 +30,7 @@ void View::Update(){
 		controller_->HandleQuit();
 		return;
 	}
-	glClearColor(background_color_.r, background_color_.g, background_color_.b, 0.0);
+	glClearColor(background_color_.r, background_color_.g, background_color_.b, background_color_.a);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glm::mat4 translate_to_player = glm::translate(glm::mat4(1.0f), -controller_->GetPlayer()->GetPosition());
 	camera_matrix_ = view_matrix_ * translate_to_player;
@@ -193,7 +193,9 @@ bool View::GetCursorPos(glm::vec3 *vec){
 	float aspect_ratio = w / h;
 	float cursor_x_pos = ((2.0f * x - w) * aspect_ratio) / (w * camera_zoom_);
 	float cursor_y_pos = (-2.0f * y + h) / (h * camera_zoom_);
-	*vec = glm::vec3(cursor_x_pos, cursor_y_pos, 0);
+	//*vec = glm::vec3(cursor_x_pos, cursor_y_pos, 0);
+	glm::vec3 player_pos = controller_->GetPlayer()->GetPosition();
+    *vec = glm::vec3(cursor_x_pos + player_pos.x, cursor_y_pos + player_pos.y, 0);
 	return true;
 }
 int View::Init(){

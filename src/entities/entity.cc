@@ -87,8 +87,11 @@ void Entity::TurnTowards(glm::vec3 &t, float dt){
 
 void Entity::LookAtPoint(glm::vec3 target)
 {
-	float angle = glm::atan(target.y, target.x);
+	float angle = glm::atan(target.y - position_.y, target.x - position_.x);
 	angle_ = angle - M_PI_2;
+	for(Weapon* w : weapons_){
+		w->AimAt(target);
+	}
 }
 
 void Entity::SetScale(float s){

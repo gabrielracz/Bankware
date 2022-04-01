@@ -1,5 +1,6 @@
 #include "projectile.hh"
 #include "game.hh"
+#include <glm/fwd.hpp>
 #include <iostream>
 
 Projectile::Projectile(GLuint texture, const glm::vec3 &position, float angle, Game* game, float speed, float lifetime)
@@ -54,7 +55,7 @@ bool Projectile::RayCircleCollision(Hitbox& hitbox, float dt){
 	if(t1 < 0 || t2 < 0)  //Only one is negative, the projectile is inside the hitbox. We don't want the player shooting themselves.
 		return false;
 
-	return true;
+	return true;   //Both of the collisions happen
 }
 
 void Projectile::HandleCollision(Entity *ent){

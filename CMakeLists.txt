@@ -6,6 +6,7 @@ project(${PROJ_NAME})
 
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+SET(COMPILER_FLAGS "")
 
 # Specify project files: header files and source files
 set(HDRS
@@ -58,6 +59,7 @@ configure_file(src/util/path_config.h.in path_config.h)
 
 # Add executable based on the source files
 add_executable(${PROJ_NAME} ${HDRS} ${SRCS})
+add_definitions(${COMPILER_FLAGS})
 
 # Directories to include for header files, so that the compiler can find
 # path_config.h
