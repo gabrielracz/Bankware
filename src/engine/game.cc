@@ -56,16 +56,19 @@ int Game::Init(){
 	int tiles_high = world_height_/tile_size;
 	for(int y = 0; y < world_height_; y += tile_size){
 		for(int x = 0; x < world_width_; x += tile_size){
-			GameObject* bkg = new GameObject(BACKGROUND, glm::vec3(x - world_width_/2, y - world_height_/2, 0), this);
+			int r = rand() % 4;
+			GLuint bgs[] = {BACKGROUND1, BACKGROUND2, BACKGROUND3, BACKGROUND4};
+			GameObject* bkg = new GameObject(bgs[r], glm::vec3(x - world_width_/2, y - world_height_/2, 0), this);
 			bkg->SetScale(tile_size);
 			backgrounds_.push_back(bkg);
 		}
 	}
 	
 	//Initialze player
-	player_ = new Entity(SHIP, glm::vec3(0,0,0), this, 0.45); 
-	Blade* b = new Blade(BLADE, glm::vec3(0, 0, 0),this);
-	player_->AddChild(b);
+	player_ = new Entity(SHIP, glm::vec3(0,0,0), this, 0.45);
+
+	//Blade* b = new Blade(BLADE, glm::vec3(0, 0, 0),this);
+	//player_->AddChild(b);
 	
 	Weapon* right_cannon = new Weapon(BULLET, PROJECTILE_BULLET, glm::vec3(1, 0.5, 0), this);
 	right_cannon->SetAimable(true);
