@@ -35,8 +35,21 @@ void Entity::Update(float dt){
 	acceleration_ = glm::vec3(0);
 	
 	//Update all children
-	for(int i = 0; i < children_.size(); i++){
-		children_[i]->Update(dt);
+	for(std::vector<GameObject*>::iterator child = children_.begin(); child != children_.end();) {
+		(*child)->Update(dt);
+		if((*child)->IsDestroyed()) {
+			children_.erase(child);
+			//Hopefully this gets rid of item pointers too may have to check if item too if there is a seg fault
+		} else {
+			++child;
+		}
+	}
+	for(std::vector<Item*>::iterator i = items_.begin(); i != items_.end();) {
+		if((*i)->IsDestroyed()) {
+			items_.erase(i);
+		} else {
+			++i;
+		}
 	}
 }
 
@@ -48,6 +61,27 @@ void Entity::AddWeapon(Weapon *wpn){
 	wpn->Attach(&position_, &angle_);
 	AddChild(wpn);
 	weapons_.push_back(wpn);
+}
+
+void Entity::AddItem(Item* item)
+{
+	std::vector<Item*> items_to_update;
+	item->Activate();
+	AddChild(item);
+	items_.push_back(item);
+	//Not gunna lie this is kinda jank this is how I update the positions of the items on the fly when something is added. 
+	//Could possibly just have the item randomly guess a probably open position to avoid O(n) computation tho but idk this works
+	items_to_update.push_back(item);
+	for (Item* i : items_) {
+		if(i->GetRadius() == item->GetRadius()) {
+			items_to_update.push_back(i);
+		}
+	}
+	int count = 1;
+	for (Item* i : items_to_update) {
+		i->SetRadiusProgress(2*count*M_PI/(items_to_update.size()-1));
+		++count;
+	}
 }
 
 void Entity::Thrust(float dt){
@@ -124,20 +158,30 @@ bool Entity::CheckCollision(Hitbox& hbox){
 }
 
 void Entity::Explode(){
-	if(!CheckShield()){
+	if(!RaiseEvent("block")){
 		game_->SpawnExplosion(explosion_effect_, position_, scale_);
 		destroyed_ = true;
 	}
 }
 
+bool Entity::RaiseEvent(const std::string& event) {
+	for(Item* i : items_) {
+		if(i->Event(event)) {
+			return true;
+		}
+	}
+	return false;
+}
 bool Entity::CheckShield(){
-	for(int i = 0; i < children_.size(); i++){
+	
+	/*for(int i = 0; i < children_.size(); i++){
 		if(children_[i]->GetType() == SHIELD){
 			delete children_[i];
 			children_.erase(children_.begin() + i);
 			return true;
 		}
 	}
+	return false;*/
 	return false;
 }
 
