@@ -8,6 +8,7 @@
 #include"game_object.hh"
 #include "blade.hh"
 #include "powerup.hh"
+#include "item.hh"
 #include "shield.hh"
 #include "shield_collectible.hh"
 #include "weapon.hh"
@@ -77,9 +78,9 @@ int Game::Init(){
 	//booty_cannon->SetAngle(M_PI);
 	//player_->AddWeapon(booty_cannon);
 
-	player_->AddChild(new Shield(SHIELD, glm::vec3(2,0,0), glm::vec3(0,0,0), this, 2*M_PI/3));
-	player_->AddChild(new Shield(SHIELD, glm::vec3(2,0,0), glm::vec3(0,0,0), this, 4*M_PI/3));
-	player_->AddChild(new Shield(SHIELD, glm::vec3(2,0,0), glm::vec3(0,0,0), this, 6*M_PI/3));
+	player_->AddItem(new Shield(SHIELD, glm::vec3(1.5,0,0), this));
+	player_->AddItem(new Shield(SHIELD, glm::vec3(1.5,0,0), this));
+	player_->AddItem(new Shield(SHIELD, glm::vec3(1.5,0,0), this));
 	entities_.push_back(player_);
 	
 	//Initialize random enemies

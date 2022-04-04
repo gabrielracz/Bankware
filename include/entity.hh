@@ -4,6 +4,8 @@
 #include "hitbox.hh"
 #include "projectile.hh"
 #include "weapon.hh"
+#include "item.hh"
+#include <string>
 
 class Enemy;
 class Effect;
@@ -19,6 +21,9 @@ protected:
 
 	//Weapons
 	std::vector<Weapon*> weapons_;
+
+	//Items
+	std::vector<Item*> items_;
 
 	//Effects
 	GLuint explosion_effect_;
@@ -40,6 +45,9 @@ public:
 	void PowerUp();
 
 	void AddWeapon(Weapon* wpn);
+
+	void AddItem(Item* item);
+	bool RaiseEvent(const std::string& event); //checks a given event against items and returns true if handled by an item
 
 	bool IsPoweredUp();
 	void SetEffect(GLuint eff);

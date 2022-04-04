@@ -26,10 +26,11 @@ set(HDRS
 	include/effect.hh
 	include/collectible.hh
 	include/shield_collectible.hh
-	include/shield.hh
 	include/powerup.hh
 	include/buoy.hh
 	include/weapon.hh
+	include/item.hh
+	include/shield.hh
 )
  
 set(SRCS
@@ -46,12 +47,13 @@ set(SRCS
 	src/objects/effect.cc
 	src/objects/collectible.cc
 	src/objects/shield_collectible.cc
-	src/objects/shield.cc
 	src/objects/powerup.cc
 	src/objects/weapons/weapon.cc
 	src/entities/entity.cc
 	src/entities/enemy.cc
 	src/entities/buoy.cc
+	src/objects/items/item.cc
+	src/objects/items/shield.cc
 )
 
 # Add path name to configuration file
