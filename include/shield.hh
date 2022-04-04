@@ -1,15 +1,13 @@
 #ifndef SHIELD_H
 #define SHIELD_H
-#include "game_object.hh"
+#include "item.hh"
 
-class Shield : public GameObject {
+class Shield : public Item {
 private:
-	float path_tracker_;
-	float path_radius_;
-	glm::vec3 origin_;
+	float path_radius_ = 2;
 public:
-	Shield(GLuint type, const glm::vec3& position, const glm::vec3& origin, Game* game, float path_start = 0.0f);
-	void Update(float dt) override;
+	Shield(GLuint type, const glm::vec3& position, Game* game);
+    virtual bool Event(const std::string& event) override;
 };
 
-#endif
+#endif // SHIELD_H
