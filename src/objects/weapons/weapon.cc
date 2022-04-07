@@ -57,7 +57,7 @@ void Weapon::AimAt(glm::vec3 &target){
 	glm::vec3 rotated_pos = glm::rotate(position_, *parent_angle_, glm::vec3(0,0,1));
 	glm::vec3 world_pos = *parent_position_ + rotated_pos;
 	float angle = glm::atan(target.y - world_pos.y, target.x - world_pos.x);
-	SetAngle(angle - *parent_angle_ - M_PI/2);
+	SetAngle(angle - *parent_angle_ - glm::pi<float>()/2);
 }
 
 void Weapon::AddShootingAngle(float a){

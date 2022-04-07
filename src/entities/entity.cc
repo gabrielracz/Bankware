@@ -79,7 +79,7 @@ void Entity::AddItem(Item* item)
 	}
 	int count = 1;
 	for (Item* i : items_to_update) {
-		i->SetRadiusProgress(2*count*M_PI/(items_to_update.size()-1));
+		i->SetRadiusProgress(2*count*glm::pi<float>()/(items_to_update.size()-1));
 		++count;
 	}
 }
@@ -109,7 +109,7 @@ void Entity::Turn(int d, float dt){
 }
 
 void Entity::TurnTowards(glm::vec3 &t, float dt){
-	float perp_angle = angle_ + M_PI/2 - 0.15;
+	float perp_angle = angle_ + glm::pi<float>()/2 - 0.15;
 	glm::vec3 perp = glm::rotate(glm::vec3(0,1,0), perp_angle, glm::vec3(0,0,1));
 	float dp = glm::dot(perp, t);
 	float a = acos(dp/(glm::length2(perp) * glm::length2(t)));
@@ -122,7 +122,7 @@ void Entity::TurnTowards(glm::vec3 &t, float dt){
 void Entity::LookAtPoint(glm::vec3 target)
 {
 	float angle = glm::atan(target.y - position_.y, target.x - position_.x);
-	angle_ = angle - M_PI_2;
+	angle_ = angle - glm::pi<float>();
 	for(Weapon* w : weapons_){
 		w->AimAt(target);
 	}
@@ -188,8 +188,8 @@ bool Entity::CheckShield(){
 void Entity::PowerUp(){
 	draw_inverted_ = true;
 	for(Weapon* w : weapons_){
-		w->AddShootingAngle(M_PI/8);
-		w->AddShootingAngle(-M_PI/8);
+		w->AddShootingAngle(glm::pi<float>()/8);
+		w->AddShootingAngle(-glm::pi<float>()/8);
 	}
 }
 

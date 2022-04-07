@@ -28,19 +28,19 @@ void Enemy::Update(float dt){
 			glm::vec3 radius = (origin_ - position_);
 			float r = radius.length();
 			position_ = glm::vec3(r*cos(path_tracker_) + origin_.x, r*sin(path_tracker_) + origin_.y, 0);
-			angle_ = fmod(path_tracker_, M_PI*2);
+			angle_ = fmod(path_tracker_, glm::pi<float>()*2);
 			break;
 		}
 		case HUNTING: {
 			//Get perpendicular vector to facing direction
-			float perp_angle = angle_ + M_PI/2 - 0.15;
+			float perp_angle = angle_ + glm::pi<float>()/2 - 0.15;
 			glm::vec3 perp = glm::rotate(glm::vec3(0,1,0), perp_angle, glm::vec3(0,0,1));
 			glm::vec3 player_position = game_->GetPlayerPosition() - position_;
 			float dp = glm::dot(perp, player_position);
 			Turn(dp, dt);
 
 			float angle_to_player = glm::acos(dp / GetAngleVector().length() * player_position.length());
-			if(glm::abs(angle_to_player) < M_PI/4){
+			if(glm::abs(angle_to_player) < glm::pi<float>()/4){
 				Thrust(dt);
 			}else{
 				Break();

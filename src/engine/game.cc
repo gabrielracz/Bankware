@@ -78,7 +78,7 @@ int Game::Init(){
 	left_cannon->SetAimable(true);
 	player_->AddWeapon(left_cannon);
 	//Weapon* booty_cannon = new Weapon(BULLET, PROJECTILE_BULLET, glm::vec3(0.0, -1, 0), this);
-	//booty_cannon->SetAngle(M_PI);
+	//booty_cannon->SetAngle(glm::pi<float>());
 	//player_->AddWeapon(booty_cannon);
 
 	player_->AddItem(new Shield(SHIELD, glm::vec3(1.5,0,0), this));
