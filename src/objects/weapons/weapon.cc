@@ -1,7 +1,8 @@
 #include "weapon.hh"
 #include "game_object.hh"
 #include "game.hh"
-#include <cmath>
+//#include <cmath>
+#include <math.h>
 #include <glm/fwd.hpp>
 #include <glm/gtx/transform.hpp>
 #include <glm/trigonometric.hpp>
@@ -29,10 +30,9 @@ void Weapon::Update(float delta_time){
 
 void Weapon::Shoot(){
 	if(shot_timer_ > 0) return;
-
+	
 	for(float a : shooting_angles_){
-		//This is fine, doesnt have significant performance impact
-		glm::vec3 rotated_pos = glm::rotate(position_, *parent_angle_, glm::vec3(0,0,1));
+		glm::vec3 rotated_pos = glm::rotate(position_, *parent_angle_, glm::vec3(0,0,1));   //This rotate is ok
 		game_->SpawnBullet(projectile_type_, *parent_position_ + rotated_pos, *parent_angle_ + a);
 	}
 
@@ -45,6 +45,7 @@ void Weapon::Attach(glm::vec3 *p_position, float *p_angle){
 }
 
 void Weapon::SetAngle(float a){
+	//Adjust shooting angles to be relative to the new angle
 	for(int i = 0; i < shooting_angles_.size(); i++){
 		shooting_angles_[i] = a + shooting_angles_[i] - angle_;
 	}

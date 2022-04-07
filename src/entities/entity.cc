@@ -2,7 +2,7 @@
 #include "data.hh"
 #include "effect.hh"
 #include "game.hh"
-#include <glm/ext/quaternion_geometric.hpp>
+//#include <glm/ext/quaternion_geometric.hpp>
 #include <glm/ext/scalar_constants.hpp>
 #include <iostream>
 #include <math.h>

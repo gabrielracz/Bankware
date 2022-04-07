@@ -1,6 +1,6 @@
 #include "view.hh"
 #include <GLFW/glfw3.h>
-#include <glm/ext/matrix_transform.hpp>
+//#include <glm/ext/matrix_transform.hpp>
 #include <glm/gtx/quaternion.hpp>
 #include <glm/gtx/string_cast.hpp>
 #include <string>
@@ -332,10 +332,13 @@ void View::SetTexture(GLuint w, const char *fname)
 //Read textures from resources_directory_ and initialize the tex_ array
 void View::SetAllTextures(void)
 {
-    // Load all textures that we will need 
+    
     glGenTextures(NUM_TEXTURES, tex_);
 	SetTexture(tex_[SHIP], (resources_directory_+std::string("/amberocket.png")).c_str());
-	SetTexture(tex_[BACKGROUND], (resources_directory_+std::string("/grid.png")).c_str());
+	SetTexture(tex_[BACKGROUND1], (resources_directory_+std::string("/space1.png")).c_str());
+	SetTexture(tex_[BACKGROUND2], (resources_directory_+std::string("/space2.png")).c_str());
+	SetTexture(tex_[BACKGROUND3], (resources_directory_+std::string("/space3.png")).c_str());
+	SetTexture(tex_[BACKGROUND4], (resources_directory_+std::string("/space4.png")).c_str());
 	SetTexture(tex_[ENEMY], (resources_directory_+std::string("/amberdisc.png")).c_str());
 	SetTexture(tex_[BLADE], (resources_directory_+std::string("/Sprites/blade-export.png")).c_str());
 	SetTexture(tex_[BULLET], (resources_directory_+std::string("/bullet.png")).c_str());

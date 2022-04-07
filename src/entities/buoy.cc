@@ -1,5 +1,6 @@
 #include "buoy.hh"
-#include <cmath>
+//#include <cmath>
+#include <math.h>
 
 
 Buoy::Buoy(GLuint type, const glm::vec3& position, Game* game, float mass)

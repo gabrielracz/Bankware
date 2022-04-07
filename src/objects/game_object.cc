@@ -1,6 +1,7 @@
 #include "game_object.hh"
 #include "game.hh"
-#include <cmath>
+//#include <cmath>
+#include <math.h>
 #include <iostream>
 
 GameObject::GameObject(GLuint type, const glm::vec3 &position, Game* game){
