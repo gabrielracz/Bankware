@@ -57,7 +57,7 @@ set(SRCS
 )
 
 # Add path name to configuration file
-configure_file(src/util/path_config.h.in path_config.h)
+configure_file(src/util/path_config.h.in ../include/path_config.h)
 
 # Add executable based on the source files
 add_executable(${PROJ_NAME} ${HDRS} ${SRCS})

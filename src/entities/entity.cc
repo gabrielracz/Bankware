@@ -38,7 +38,7 @@ void Entity::Update(float dt){
 	for(std::vector<GameObject*>::iterator child = children_.begin(); child != children_.end();) {
 		(*child)->Update(dt);
 		if((*child)->IsDestroyed()) {
-			children_.erase(child);
+			child = children_.erase(child);
 			//Hopefully this gets rid of item pointers too may have to check if item too if there is a seg fault
 		} else {
 			++child;
@@ -46,7 +46,7 @@ void Entity::Update(float dt){
 	}
 	for(std::vector<Item*>::iterator i = items_.begin(); i != items_.end();) {
 		if((*i)->IsDestroyed()) {
-			items_.erase(i);
+			i = items_.erase(i);
 		} else {
 			++i;
 		}
@@ -122,7 +122,7 @@ void Entity::TurnTowards(glm::vec3 &t, float dt){
 void Entity::LookAtPoint(glm::vec3 target)
 {
 	float angle = glm::atan(target.y - position_.y, target.x - position_.x);
-	angle_ = angle - glm::pi<float>();
+	angle_ = angle - glm::pi<float>()/2;
 	for(Weapon* w : weapons_){
 		w->AimAt(target);
 	}
@@ -173,15 +173,6 @@ bool Entity::RaiseEvent(const std::string& event) {
 	return false;
 }
 bool Entity::CheckShield(){
-	
-	/*for(int i = 0; i < children_.size(); i++){
-		if(children_[i]->GetType() == SHIELD){
-			delete children_[i];
-			children_.erase(children_.begin() + i);
-			return true;
-		}
-	}
-	return false;*/
 	return false;
 }
 

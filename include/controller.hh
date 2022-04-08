@@ -35,11 +35,11 @@ public:
 	void HandleShoot(bool t);
 	void PlayerLook(bool t, glm::vec3& v);
 
-	inline std::vector<Entity*>& GetEntities(){return game_->GetEntities();};
-	inline std::vector<GameObject*>& GetBackgrounds(){return game_->GetBackgrounds();};
-	inline std::vector<Projectile*>& GetProjectiles(){return game_->GetProjectiles();};
-	inline std::vector<Effect*>& GetEffects(){return game_->GetEffects();};
-	inline std::vector<Collectible*>& GetCollectibles(){return game_->GetCollectibles();};
+	inline const std::vector<Entity*>& GetEntities(){return game_->GetEntities();};
+	inline const std::vector<GameObject*>& GetBackgrounds(){return game_->GetBackgrounds();};
+	inline const std::vector<Projectile*>& GetProjectiles(){return game_->GetProjectiles();};
+	inline const std::vector<Effect*>& GetEffects(){return game_->GetEffects();};
+	inline const std::vector<Collectible*>& GetCollectibles(){return game_->GetCollectibles();};
 	inline Entity* GetPlayer(){return game_->GetPlayer();};
 };
 #endif

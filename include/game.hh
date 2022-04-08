@@ -67,10 +67,10 @@ public:
 
 	Entity* GetPlayer();
 	glm::vec3& GetPlayerPosition();
-	std::vector<Entity*>& GetEntities();
-	std::vector<GameObject*>& GetBackgrounds();
-	std::vector<Projectile*>& GetProjectiles();
-	std::vector<Effect*>& GetEffects();
-	std::vector<Collectible*>& GetCollectibles();
+	const std::vector<Entity*>& GetEntities();
+	const std::vector<GameObject*>& GetBackgrounds();
+	const std::vector<Projectile*>& GetProjectiles();
+	const std::vector<Effect*>& GetEffects();
+	const std::vector<Collectible*>& GetCollectibles();
 };
 #endif

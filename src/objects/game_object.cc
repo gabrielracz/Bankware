@@ -25,7 +25,7 @@ void GameObject::Update(float dt){
 }
 
 glm::vec3 GameObject::GetAngleVector(){
-	double a = angle_ + glm::pi<float>();
+	double a = angle_ + glm::pi<float>()/2;
 	return glm::vec3(cos(a), sin(a), 0);
 }
 

@@ -128,7 +128,7 @@ void Game::Update(float dt){
 	for(auto it = projectiles_.begin(); it != projectiles_.end();){
 		Projectile* prj = *it;
 		if(prj->IsDestroyed()){
-			projectiles_.erase(it);
+			it = projectiles_.erase(it);
 			delete prj;
 		}else {
 			CheckProjectileCollisions(prj, dt);
@@ -141,7 +141,7 @@ void Game::Update(float dt){
 	for(auto it = entities_.begin(); it != entities_.end();){
 		Entity* ent = *it;
 		if(ent->IsDestroyed()){
-			entities_.erase(it);
+			it = entities_.erase(it);
 			if(ent != player_)
 				delete ent;
 		}else{
@@ -153,7 +153,7 @@ void Game::Update(float dt){
 	for(auto it = collectibles_.begin(); it != collectibles_.end();){
 		Collectible* col = *it;
 		if(col->IsDestroyed()){
-			collectibles_.erase(it);
+			it = collectibles_.erase(it);
 			delete col;
 		}else{
 			CheckCollectibleCollision(col);
@@ -164,7 +164,7 @@ void Game::Update(float dt){
 	for(auto it = effects_.begin(); it != effects_.end();){
 		Effect* eff = *it;
 		if(eff->IsDestroyed()){
-			effects_.erase(it);
+			it = effects_.erase(it);
 			delete eff;
 		}else{
 			eff->Update(dt);
@@ -372,23 +372,23 @@ void Game::PlayerLook(glm::vec3& v){
 	player_->LookAtPoint(v);
 }
 
-std::vector<Entity*>& Game::GetEntities(){
+const std::vector<Entity*>& Game::GetEntities(){
 	return entities_;
 }
 
-std::vector<GameObject*>& Game::GetBackgrounds(){
+const std::vector<GameObject*>& Game::GetBackgrounds(){
 	return backgrounds_;
 }
 
-std::vector<Projectile*>& Game::GetProjectiles(){
+const std::vector<Projectile*>& Game::GetProjectiles(){
 	return projectiles_;
 }
 
-std::vector<Effect*>& Game::GetEffects(){
+const std::vector<Effect*>& Game::GetEffects(){
 	return effects_;
 }
 
-std::vector<Collectible*>& Game::GetCollectibles(){
+const std::vector<Collectible*>& Game::GetCollectibles(){
 	return collectibles_;
 }
 
