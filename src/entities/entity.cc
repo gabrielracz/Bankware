@@ -3,7 +3,7 @@
 #include "effect.hh"
 #include "game.hh"
 //#include <glm/ext/quaternion_geometric.hpp>
-#include <glm/ext/scalar_constants.hpp>
+//#include <glm/ext/scalar_constants.hpp>
 #include <iostream>
 #include <math.h>
 #define DRAG_CONSTANT 5.0f

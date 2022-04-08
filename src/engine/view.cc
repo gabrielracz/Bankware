@@ -80,7 +80,7 @@ void View::Update(){
 //If the position of the object relative to camera lies between 1 and -1
 //on bot x and y it is visible in the current window
 bool View::IsVisible(GameObject *obj, float f){
-	glm::vec3 p = -camera_matrix_ * glm::vec4(obj->GetPosition(), 1.0);
+	glm::vec4 p = -camera_matrix_ * glm::vec4(obj->GetPosition(), 1.0);
 	return (p.x < (1 + camera_zoom_)) && (p.x > (-1 - camera_zoom_)) && (p.y < (1 + camera_zoom_) && p.y > (-1 - camera_zoom_));
 }
 
