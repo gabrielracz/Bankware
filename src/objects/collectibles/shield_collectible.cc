@@ -1,5 +1,5 @@
 #include "collectibles.hh"
-#include "shield.hh"
+#include "items.hh"
 
 ShieldCollectible::ShieldCollectible(GLuint type, const glm::vec3& position, Game* game)
 	: Collectible(type, position, game) {}

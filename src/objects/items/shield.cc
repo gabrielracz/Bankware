@@ -1,4 +1,4 @@
-#include "shield.hh"
+#include "items.hh"
 Shield::Shield(GLuint type, const glm::vec3& position, Game* game) : Item(type, position, game)
 {
 	

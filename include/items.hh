@@ -1,5 +1,5 @@
-#ifndef SHIELD_H
-#define SHIELD_H
+#ifndef ITEMS_H
+#define ITEMS_H
 #include "item.hh"
 
 class Shield : public Item {
@@ -9,5 +9,4 @@ public:
 	Shield(GLuint type, const glm::vec3& position, Game* game);
     virtual bool Event(const std::string& event) override;
 };
-
-#endif // SHIELD_H
+#endif // ITEMS_H
