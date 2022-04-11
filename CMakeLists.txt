@@ -30,7 +30,7 @@ set(HDRS
 	include/buoy.hh
 	include/weapon.hh
 	include/item.hh
-	include/shield.hh
+	include/items.hh
 )
  
 set(SRCS

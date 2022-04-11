@@ -9,8 +9,8 @@
 #include "blade.hh"
 #include "powerup.hh"
 #include "item.hh"
-#include "shield.hh"
-#include "shield_collectible.hh"
+#include "items.hh"
+#include "collectibles.hh"
 #include "weapon.hh"
 #include <GLFW/glfw3.h>
 #include <glm/fwd.hpp>
