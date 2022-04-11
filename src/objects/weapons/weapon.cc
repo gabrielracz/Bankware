@@ -67,3 +67,18 @@ void Weapon::AddShootingAngle(float a){
 void Weapon::SetAimable(bool t){
 	aimable_ = t;
 }
+
+void Weapon::ReduceCooldown(float cd)
+{
+	if ((shot_cooldown_ - cd) <= 0.05f) {
+		shot_cooldown_ = 0.05f;
+		return;
+	}
+	shot_cooldown_ -= cd;
+}
+
+void Weapon::ResetShootingAngles()
+{
+	shooting_angles_.clear();
+	shooting_angles_.push_back(angle_);
+}

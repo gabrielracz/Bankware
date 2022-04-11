@@ -10,8 +10,8 @@
 #include "blade.hh"
 #include "powerup.hh"
 #include "item.hh"
-#include "shield.hh"
-#include "shield_collectible.hh"
+#include "items.hh"
+#include "collectibles.hh"
 #include "weapon.hh"
 #include <GLFW/glfw3.h>
 #include <glm/fwd.hpp>
@@ -52,6 +52,7 @@ void Game::InitPrototypes(){
 //Init the initial game state
 int Game::Init(){
 	InitPrototypes();
+	srand(time(NULL));
 	//Tile the world
 	float tile_size = 2;
 	int tiles_wide = world_width_/tile_size;
@@ -87,7 +88,6 @@ int Game::Init(){
 	entities_.push_back(player_);
 	
 	//Initialize random enemies
-	srand(time(NULL));
 	for(int i = 0; i < 200; i++){
 		float randx = rand()%world_width_ - (float)world_width_/2;
 		float randy = rand()%world_height_ - (float)world_height_/2;
@@ -111,10 +111,22 @@ int Game::Init(){
 		float randy = rand()%world_height_ - (float)world_height_/2;
 		collectibles_.push_back(new Powerup(POWERUP, glm::vec3(randx, randy, 0), this));
 	}
+
+	for(int i = 0; i < num_powerups; i++){
+		float randx = rand()%world_width_ - (float)world_width_/2;
+		float randy = rand()%world_height_ - (float)world_height_/2;
+		collectibles_.push_back(new DashCollectible(DASH, glm::vec3(randx, randy, 0), this));
+	}
+
+	for(int i = 0; i < num_powerups; i++){
+		float randx = rand()%world_width_ - (float)world_width_/2;
+		float randy = rand()%world_height_ - (float)world_height_/2;
+		collectibles_.push_back(new BuffCollectible(BUFF, glm::vec3(randx, randy, 0), this));
+	}
 	
 	//Initialize collectible shields
-	int num_shields = 50;
-	for(int i = 0; i < num_powerups; i++){
+	int num_shields = 30;
+	for(int i = 0; i < num_shields; i++){
 		float randx = rand()%world_width_ - (float)world_width_/2;
 		float randy = rand()%world_height_ - (float)world_height_/2;
 		collectibles_.push_back(new ShieldCollectible(SHIELD, glm::vec3(randx, randy, 0), this));
@@ -170,6 +182,32 @@ void Game::Update(float dt){
 			eff->Update(dt);
 			it++;
 		}
+	}
+
+	CheckPlayerInBorder();
+}
+
+void Game::CheckPlayerInBorder()
+{
+	if (player_->GetPosition().x > world_width_/2) {
+		glm::vec3 force = glm::normalize(player_->GetPosition() - glm::vec3(player_->GetPosition().x + 10, player_->GetPosition().y, player_->GetPosition().z));
+		float diff = player_->GetPosition().x - world_width_/2;
+		player_->SetVelocity(force * glm::clamp(glm::abs(diff), 0.2f, 2.0f));
+	}
+	if (player_->GetPosition().x < -world_width_/2) {
+		glm::vec3 force = glm::normalize(player_->GetPosition() - glm::vec3(player_->GetPosition().x - 10, player_->GetPosition().y, player_->GetPosition().z));
+		float diff = player_->GetPosition().x + world_width_/2;
+		player_->SetVelocity(force * glm::clamp(glm::abs(diff), 0.2f, 2.0f));
+	}
+	if (player_->GetPosition().y > world_height_/2) {
+		glm::vec3 force = glm::normalize(player_->GetPosition() - glm::vec3(player_->GetPosition().x, player_->GetPosition().y + 10, player_->GetPosition().z));
+		float diff = player_->GetPosition().y - world_height_/2;
+		player_->SetVelocity(force * glm::clamp(glm::abs(diff), 0.2f, 2.0f));
+	}
+	if (player_->GetPosition().y < -world_height_/2) {
+		glm::vec3 force = glm::normalize(player_->GetPosition() - glm::vec3(player_->GetPosition().x, player_->GetPosition().y - 10, player_->GetPosition().z));
+		float diff = player_->GetPosition().y + world_height_/2;
+		player_->SetVelocity(force * glm::clamp(glm::abs(diff), 0.2f, 2.0f));
 	}
 }
 

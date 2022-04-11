@@ -36,6 +36,7 @@ private:
 	Effect* effect_prototypes_[NUM_EFFECTS];
 	Projectile* projectile_prototypes_[NUM_PROJECTILES];
 
+	void CheckPlayerInBorder();
 public:
 	Game(int world_width, int world_height);
 	~Game();

@@ -30,6 +30,8 @@ protected:
 	//Effects
 	GLuint explosion_effect_;
 
+	float power_up_cooldown_;
+
 public:
 	Entity(GLuint type, const glm::vec3& position, Game* game, float speed = 0.80, float mass = 1.0f);
 
@@ -44,7 +46,7 @@ public:
 	bool CheckCollision(Hitbox& hbox);
 	void Explode();
 	bool CheckShield();
-	void PowerUp();
+	void PowerUp(float time);
 
 	void AddWeapon(Weapon* wpn);
 
@@ -60,7 +62,10 @@ public:
 	float GetMass();
 	void SetVelocity(const glm::vec3& v);
 	void SetPosition(const glm::vec3& p);
+	void ReduceWeaponCooldown(float cd);
 	Hitbox& GetHitbox();
 
+	inline float GetSpeed() const {return speed_; }
+	inline void SetSpeed(float speed) { speed_ = speed; }
 };
 #endif

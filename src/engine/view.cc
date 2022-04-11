@@ -250,6 +250,13 @@ void View::MouseInput(GLFWwindow* window, int key, int action, int mods){
 			controller->HandleShoot(false);
 		}
 	}
+	if(key == GLFW_MOUSE_BUTTON_RIGHT){
+		if(action == GLFW_PRESS) {
+			controller->HandleAbility(true, "dash");
+		} else if (action == GLFW_RELEASE) {
+			controller->HandleAbility(false, "dash");
+		}
+	}
 }
 
 bool View::GetCursorPos(glm::vec3 *vec){
@@ -427,11 +434,13 @@ void View::SetAllTextures(void)
 	SetTexture(tex_[BLADE], (resources_directory_+std::string("/Sprites/blade-export.png")).c_str());
 	SetTexture(tex_[BULLET], (resources_directory_+std::string("/bullet.png")).c_str());
 	SetTexture(tex_[EXPLOSION], (resources_directory_+std::string("/Sprites/explosion.png")).c_str());
-	SetTexture(tex_[SHIELD], (resources_directory_+std::string("/Sprites/orb.png")).c_str());
-	SetTexture(tex_[POWERUP], (resources_directory_+std::string("/Sprites/powerup.png")).c_str());
+	SetTexture(tex_[SHIELD], (resources_directory_+std::string("/shield.png")).c_str());
+	SetTexture(tex_[POWERUP], (resources_directory_+std::string("/powerup.png")).c_str());
 	SetTexture(tex_[BUOY], (resources_directory_+std::string("/buoy.png")).c_str());
 	SetTexture(tex_[FIRE], (resources_directory_+std::string("/fire.png")).c_str());
 	SetTexture(tex_[TEXT], (resources_directory_+std::string("/charmap-cellphone_white.png")).c_str());
+	SetTexture(tex_[DASH], (resources_directory_+std::string("/dash.png")).c_str());
+	SetTexture(tex_[BUFF], (resources_directory_+std::string("/buff.png")).c_str());
     // glBindTexture(GL_TEXTURE_2D, tex_[0]);
 }
 

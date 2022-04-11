@@ -25,14 +25,14 @@ set(HDRS
 	include/projectile.hh
 	include/effect.hh
 	include/collectible.hh
-	include/shield_collectible.hh
+	include/collectibles.hh
 	include/powerup.hh
 	include/buoy.hh
 	include/weapon.hh
 	include/item.hh
-	include/shield.hh
 	include/text_object.hh
 	include/particle_system.hh
+	include/items.hh
 )
  
 set(SRCS
@@ -47,9 +47,11 @@ set(SRCS
 	src/objects/blade.cc
 	src/objects/projectile.cc
 	src/objects/effect.cc
-	src/objects/collectible.cc
-	src/objects/shield_collectible.cc
-	src/objects/powerup.cc
+	src/objects/collectibles/collectible.cc
+	src/objects/collectibles/shield_collectible.cc
+	src/objects/collectibles/dash_collectible.cc
+	src/objects/collectibles/buff_collectible.cc
+	src/objects/collectibles/powerup.cc
 	src/objects/weapons/weapon.cc
 	src/objects/text_object.cc
 	src/entities/entity.cc
@@ -58,6 +60,10 @@ set(SRCS
 	src/objects/items/item.cc
 	src/objects/items/shield.cc
 	src/objects/particle_system.cc
+	src/objects/items/dash.cc
+	src/objects/items/speed_up.cc
+	src/objects/items/dashbuff.cc
+	src/objects/items/rate_of_fire.cc
 )
 
 # Add path name to configuration file

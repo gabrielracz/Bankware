@@ -1,4 +1,8 @@
 bin/*
+<<<<<<< HEAD
 .cache
 compile_commands.json
 include/path_config.h
+=======
+include/path_config.h
+>>>>>>> 7d8afaed17532b7d2e737654cf726c786cde8b2b
