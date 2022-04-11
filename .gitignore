@@ -1,1 +1,4 @@
 bin/*
+.cache
+compile_commands.json
+include/path_config.h
