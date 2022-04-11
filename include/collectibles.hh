@@ -9,4 +9,18 @@ public:
 	ShieldCollectible(GLuint type, const glm::vec3& position, Game* game);
 	void HandleCollision(Entity* player) override;
 };
+
+class DashCollectible : public Collectible {
+
+public:
+	DashCollectible(GLuint type, const glm::vec3& position, Game* game);
+	void HandleCollision(Entity* player) override;
+};
+
+class BuffCollectible : public Collectible {
+
+public:
+	BuffCollectible(GLuint type, const glm::vec3& position, Game* game);
+	void HandleCollision(Entity* player) override;
+};
 #endif // COLLECTIBLES_H

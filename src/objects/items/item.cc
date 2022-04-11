@@ -13,3 +13,12 @@ void Item::Update(float dt)
 	position_ = glm::vec3(r*cos(-path_tracker_) + origin_.x, r*sin(-path_tracker_) + origin_.y, 0);
 	angle_ = fmod(path_tracker_, glm::pi<float>()*2);
 }
+
+bool Item::Event(const std::string& event)
+{
+	if(event == "damage") {
+        Deactivate();
+        return true;
+    }
+    return false;
+}

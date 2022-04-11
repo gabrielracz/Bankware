@@ -47,6 +47,8 @@ set(SRCS
 	src/objects/effect.cc
 	src/objects/collectibles/collectible.cc
 	src/objects/collectibles/shield_collectible.cc
+	src/objects/collectibles/dash_collectible.cc
+	src/objects/collectibles/buff_collectible.cc
 	src/objects/collectibles/powerup.cc
 	src/objects/weapons/weapon.cc
 	src/entities/entity.cc
@@ -54,6 +56,10 @@ set(SRCS
 	src/entities/buoy.cc
 	src/objects/items/item.cc
 	src/objects/items/shield.cc
+	src/objects/items/dash.cc
+	src/objects/items/speed_up.cc
+	src/objects/items/dashbuff.cc
+	src/objects/items/rate_of_fire.cc
 )
 
 # Add path name to configuration file
