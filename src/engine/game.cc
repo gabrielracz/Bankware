@@ -113,8 +113,8 @@ int Game::Init(){
 	}
 	
 	//Initialize collectible shields
-	int num_shields = 50;
-	for(int i = 0; i < num_powerups; i++){
+	int num_shields = 20;
+	for(int i = 0; i < num_shields; i++){
 		float randx = rand()%world_width_ - (float)world_width_/2;
 		float randy = rand()%world_height_ - (float)world_height_/2;
 		collectibles_.push_back(new ShieldCollectible(SHIELD, glm::vec3(randx, randy, 0), this));
