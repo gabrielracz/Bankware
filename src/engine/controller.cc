@@ -17,7 +17,7 @@ Controller::Controller(){
 	apply_shoot_ = false;
 	apply_turn_ = 0;
 	mouse_look_ = false;
-
+	can_handle_ability_ = true;
 }
 
 int Controller::Start(){
@@ -92,4 +92,15 @@ void Controller::PlayerLook(bool t, glm::vec3& v){
 	//mouse_look_ = t;
 	//mousepos = v;
 	game_->PlayerLook(v);
+}
+
+void Controller::HandleAbility(bool t, const std::string& ability)
+{
+	if(t && can_handle_ability_) {
+		game_->GetPlayer()->RaiseEvent(ability);
+		can_handle_ability_ = false;
+	}
+	if(!t && !can_handle_ability_) {
+		can_handle_ability_ = true;
+	}
 }

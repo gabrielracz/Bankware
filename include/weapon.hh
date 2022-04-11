@@ -24,7 +24,9 @@ public:
 	void AimAt(glm::vec3& target);
 	void Attach(glm::vec3* p_position, float* p_angle);
 	void AddShootingAngle(float angle);
+	void ResetShootingAngles();
 	void SetCooldown(float cd);
+	void ReduceCooldown(float cd);
 	void ResetCooldown();
 	void SetAimable(bool t);
 };

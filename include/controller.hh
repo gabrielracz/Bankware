@@ -15,6 +15,9 @@ private:
 	bool apply_right_turn_;
 	bool apply_left_turn_;
 	bool mouse_look_;
+	bool use_dash_;
+	bool can_handle_ability_;
+
 	glm::vec3 mousepos;
 
 	std::string title_;
@@ -34,6 +37,7 @@ public:
 	void HandleBreak(bool t);
 	void HandleShoot(bool t);
 	void PlayerLook(bool t, glm::vec3& v);
+	void HandleAbility(bool t, const std::string& ability);
 
 	inline const std::vector<Entity*>& GetEntities(){return game_->GetEntities();};
 	inline const std::vector<GameObject*>& GetBackgrounds(){return game_->GetBackgrounds();};
