@@ -6,7 +6,6 @@ Shield::Shield(GLuint type, const glm::vec3& position, Game* game) : Item(type, 
 bool Shield::Event(const std::string& event)
 {
 	if(event == "block") {
-        //printf("BLOCKED\n");
         SetDestroyed();
         return true;
     }

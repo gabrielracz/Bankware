@@ -25,7 +25,7 @@ set(HDRS
 	include/projectile.hh
 	include/effect.hh
 	include/collectible.hh
-	include/shield_collectible.hh
+	include/collectibles.hh
 	include/powerup.hh
 	include/buoy.hh
 	include/weapon.hh
@@ -45,9 +45,9 @@ set(SRCS
 	src/objects/blade.cc
 	src/objects/projectile.cc
 	src/objects/effect.cc
-	src/objects/collectible.cc
-	src/objects/shield_collectible.cc
-	src/objects/powerup.cc
+	src/objects/collectibles/collectible.cc
+	src/objects/collectibles/shield_collectible.cc
+	src/objects/collectibles/powerup.cc
 	src/objects/weapons/weapon.cc
 	src/entities/entity.cc
 	src/entities/enemy.cc
