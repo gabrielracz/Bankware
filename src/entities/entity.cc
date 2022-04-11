@@ -15,7 +15,7 @@ Entity::Entity(GLuint type, const glm::vec3& position, Game* game, float speed, 
 	speed_ = speed;
 	hitbox_ =  Hitbox(&position_, scale_*0.6);
 	mass_ = mass;
-
+	thrust_ = false;
 	explosion_effect_ = EFFECT_EXPLOSION;
 }
 
@@ -51,6 +51,7 @@ void Entity::Update(float dt){
 			++i;
 		}
 	}
+	thrust_ = false;
 }
 
 void Entity::SetEffect(GLuint eff){
@@ -86,6 +87,7 @@ void Entity::AddItem(Item* item)
 
 void Entity::Thrust(float dt){
 	acceleration_ = GetAngleVector() * speed_ * (dt*50);
+	thrust_ = true;
 	//acceleration_ = glm::rotate(glm::vec3(0, speed_, 0), angle_, glm::vec3(0,0,1))*(dt*45);
 }
 
@@ -184,3 +186,7 @@ void Entity::PowerUp(){
 	}
 }
 
+
+bool Entity::GetThrust(){
+	return thrust_;
+}

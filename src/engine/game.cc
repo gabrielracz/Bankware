@@ -4,6 +4,7 @@
 #include "collectible.hh"
 #include "buoy.hh"
 #include "entity.hh"
+#include "particle_system.hh"
 #include "projectile.hh"
 #include"game_object.hh"
 #include "blade.hh"
@@ -67,10 +68,9 @@ int Game::Init(){
 	
 	//Initialze player
 	player_ = new Entity(SHIP, glm::vec3(0,0,0), this, 0.45);
+	ParticleSystem* thrust = new ParticleSystem(FIRE, glm::vec3(0, -0.75, 0), player_,  this);
+	player_->AddChild(thrust);
 
-	//Blade* b = new Blade(BLADE, glm::vec3(0, 0, 0),this);
-	//player_->AddChild(b);
-	
 	Weapon* right_cannon = new Weapon(BULLET, PROJECTILE_BULLET, glm::vec3(1, 0.5, 0), this);
 	right_cannon->SetAimable(true);
 	player_->AddWeapon(right_cannon);
@@ -188,8 +188,7 @@ bool Game::CheckProjectileCollisions(Projectile *prj, float dt){
 		Entity* opp = entities_[i];
 		glm::vec3 ep = opp->GetPosition();
 		glm::vec3 pp = prj->GetPosition();
-		//if(fabs(ep.x - pp.x) < prj->GetSpeed()*dt && fabs(ep.y - pp.y) < prj->GetSpeed()*dt)
-			//continue;
+
 		if(opp->IsDestroyed())
 			continue;
 		bool hit = prj->RayCircleCollision(opp->GetHitbox(), dt);

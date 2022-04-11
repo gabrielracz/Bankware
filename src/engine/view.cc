@@ -1,8 +1,11 @@
 #include "view.hh"
 #include <GLFW/glfw3.h>
 //#include <glm/ext/matrix_transform.hpp>
+#include <glm/ext/vector_float3.hpp>
+#include <glm/gtx/norm.hpp>
 #include <glm/gtx/quaternion.hpp>
 #include <glm/gtx/string_cast.hpp>
+#include <glm/gtx/transform.hpp>
 #include <string>
 #include "collectible.hh"
 #include "controller.hh"
@@ -15,7 +18,8 @@ View::View(const std::string& title, unsigned int window_width, unsigned int win
 	window_width_ = window_width;
 	window_height_ = window_height;
 	controller_ = controller;
-	background_color_ = glm::vec4(0, 0, 0, 0);
+	background_color_ = glm::vec4(0, 0, 0, 1);
+	uptime_ = 0;
 }
 
 
@@ -25,19 +29,23 @@ View::~View(){
 }
 
 
-void View::Update(){
+void View::Update(float dt){
+	uptime_ += dt;
 	if(glfwWindowShouldClose(window_)){
 		controller_->HandleQuit();
 		return;
 	}
 	glClearColor(background_color_.r, background_color_.g, background_color_.b, background_color_.a);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glm::mat4 translate_to_player = glm::translate(glm::mat4(1.0f), -controller_->GetPlayer()->GetPosition());
+	GameObject* player = controller_->GetPlayer();
+	glm::mat4 translate_to_player = glm::translate(glm::mat4(1.0f), -player->GetPosition());
 	camera_matrix_ = view_matrix_ * translate_to_player;
-	shader_.SetUniformMat4("view_matrix", camera_matrix_);
 
-	//Capture mouse cursor movement
+	RenderHUD();
 
+	shader_ = &shaders_[SPRITE_SHADER];
+	shader_->Enable();
+	shader_->SetUniformMat4("view_matrix", camera_matrix_);
 
 	//Draw game objects
 	std::vector<Entity*> entities = controller_->GetEntities();
@@ -66,7 +74,7 @@ void View::Update(){
 
 	std::vector<GameObject*> backgrounds = controller_->GetBackgrounds();
 	for(auto bkg : backgrounds){
-		if(IsVisible(bkg, 0))
+		if(IsVisible(bkg))
 			RenderObject(bkg);
 	}
 
@@ -81,11 +89,20 @@ void View::Update(){
 //on bot x and y it is visible in the current window
 bool View::IsVisible(GameObject *obj, float f){
 	glm::vec4 p = -camera_matrix_ * glm::vec4(obj->GetPosition(), 1.0);
-	return (p.x < (1 + camera_zoom_)) && (p.x > (-1 - camera_zoom_)) && (p.y < (1 + camera_zoom_) && p.y > (-1 - camera_zoom_));
+	float s = 1;
+	return (p.x < (s + camera_zoom_)) && (p.x > (-s - camera_zoom_)) && (p.y < (s + camera_zoom_) && p.y > (-s - camera_zoom_));
 }
 
+
 void View::RenderObject(GameObject* obj, const glm::mat4& parent_matrix){
-    glBindTexture(GL_TEXTURE_2D, tex_[obj->GetType()]);
+	if(obj->GetType() == FIRE){
+		RenderParticleSystem(obj, parent_matrix);
+		shader_ = &shaders_[SPRITE_SHADER];
+		shader_->SetSpriteAttributes();
+		shader_->Enable();
+		return;
+	}
+	glBindTexture(GL_TEXTURE_2D, tex_[obj->GetType()]);
 	//
 	//Create the transformation matrix
 	float s = obj->GetScale();
@@ -93,7 +110,7 @@ void View::RenderObject(GameObject* obj, const glm::mat4& parent_matrix){
 	glm::mat4 translation_matrix = glm::translate(glm::mat4(1.0f), obj->GetPosition());
 	glm::mat4 rotation_matrix = glm::rotate(glm::mat4(1.0f), obj->GetAngle(), glm::vec3(0,0,1)) ; 
 	glm::mat4 transformation_matrix =  translation_matrix * rotation_matrix * scaling_matrix;   //TORS
-	shader_.SetUniformMat4("transformation_matrix", parent_matrix * transformation_matrix);
+	shader_->SetUniformMat4("transformation_matrix", parent_matrix * transformation_matrix);
 
 	
 	//Hack to make color of player change
@@ -101,17 +118,73 @@ void View::RenderObject(GameObject* obj, const glm::mat4& parent_matrix){
 	if(obj->IsInverted()){
 		draw_inverted = true;
 	}
-	shader_.SetUniform1i("inverted", draw_inverted);	
-	
+	shader_->SetUniform1i("inverted", draw_inverted);	
+	glDrawElements(GL_TRIANGLES, shader_->GetSpriteSize(), GL_UNSIGNED_INT, 0);
     // Draw the entity
-	glDrawElements(GL_TRIANGLES, size_, GL_UNSIGNED_INT, 0);
-	
 	std::vector<GameObject*> children = obj->GetChildren();
 	if(children.size() > 0){
 		for(int i = 0; i < children.size(); i++){
 			RenderObject(children[i], transformation_matrix);
 		}
 	}
+}
+
+void View::RenderParticleSystem(GameObject* obj, const glm::mat4& parent_matrix){
+	shader_ = &shaders_[PARTICLE_SHADER];
+	shader_->Enable();
+	shader_->SetParticleAttributes();
+
+    glBindTexture(GL_TEXTURE_2D, tex_[obj->GetType()]);
+
+	float s = obj->GetScale();
+    glm::mat4 scaling_matrix = glm::scale(glm::mat4(1.0f), glm::vec3(s, s, 1.0));
+	glm::mat4 translation_matrix = glm::translate(glm::mat4(1.0f), obj->GetPosition());
+	glm::mat4 rotation_matrix = glm::rotate(glm::mat4(1.0f), obj->GetAngle(), glm::vec3(0,0,1)) ; 
+	glm::mat4 transformation_matrix =  translation_matrix * rotation_matrix * scaling_matrix;   //TORS
+	shader_->SetUniformMat4("view_matrix", camera_matrix_);
+	shader_->SetUniformMat4("transformation_matrix", parent_matrix * transformation_matrix);
+
+    // Set the time in the shader
+    shader_->SetUniform1f("time", uptime_);
+
+    // Draw the entity
+    glDrawElements(GL_TRIANGLES, shader_->GetParticleSize(), GL_UNSIGNED_INT, 0);
+}
+void View::RenderHUD(){
+#define TEXT_LENGTH 6
+    glBindTexture(GL_TEXTURE_2D, tex_[TEXT]);
+	shader_ = &shaders_[TEXT_SHADER];
+	shader_->Enable();
+
+	float h = camera_zoom_*1;
+	float w = TEXT_LENGTH*0.75*(h);
+    glm::mat4 scaling_matrix = glm::scale(glm::mat4(1.0f), glm::vec3(w,h,1));
+
+	glm::vec3 pos (-0.81, 0.94, 0);
+    glm::mat4 translation_matrix = glm::translate(glm::mat4(1.0f), pos);
+	
+	shader_->SetUniformMat4("view_matrix", camera_matrix_);
+    shader_->SetUniformMat4("transformation_matrix", translation_matrix * scaling_matrix);
+
+	std::string text = std::to_string(uptime_);
+	//std::cout << text << std::endl;
+
+	// Set text length
+	int final_size = text.size();
+	if (final_size > TEXT_LENGTH){
+		final_size = TEXT_LENGTH;
+	}
+	shader_->SetUniform1i("text_len", final_size);
+
+	// Set the text data
+	GLint data[TEXT_LENGTH];
+	for (int i = 0; i < final_size; i++){
+		data[i] = text[i];
+	}
+	shader_->SetUniformIntArray("text_content", final_size, data);
+
+    // Draw the entity
+    glDrawElements(GL_TRIANGLES, shader_->GetSpriteSize(), GL_UNSIGNED_INT, 0);
 }
 
 void View::MouseMovementInput(){
@@ -234,27 +307,38 @@ int View::Init(){
     glfwSetFramebufferSizeCallback(window_, ResizeCallback);
 
     // Set up square geometry
-    size_ = CreateSprite();
+    //size_ = CreateSprite();
 
-    // Initialize shader
-	shader_.Init((resources_directory_+std::string("/vertex_shader.glsl")).c_str(), (resources_directory_+std::string("/fragment_shader.glsl")).c_str());
-    shader_.Enable();
+    // Initialize shaders
+	shaders_[SPRITE_SHADER].Init((resources_directory_+std::string("/shaders/sprite_vertex_shader.glsl")).c_str(), (resources_directory_+std::string("/shaders/sprite_fragment_shader.glsl")).c_str());
+	shaders_[SPRITE_SHADER].CreateSprite();
+	shaders_[SPRITE_SHADER].SetSpriteAttributes();
+
+	shaders_[PARTICLE_SHADER].Init((resources_directory_+std::string("/shaders/particle_vertex_shader.glsl")).c_str(), (resources_directory_+std::string("/shaders/sprite_fragment_shader.glsl")).c_str());
+	shaders_[PARTICLE_SHADER].CreateParticles();
+	shaders_[PARTICLE_SHADER].SetParticleAttributes();
+
+	shaders_[TEXT_SHADER].Init((resources_directory_+std::string("/shaders/text_vertex_shader.glsl")).c_str(), (resources_directory_+std::string("/shaders/text_fragment_shader.glsl")).c_str());
+	shaders_[TEXT_SHADER].CreateSprite();
+	shaders_[TEXT_SHADER].SetSpriteAttributes();
+
+	//shader_ = &shaders_[SPRITE_SHADER];
+	//shader_->Enable();
+    //shader_->SetSpriteAttributes();
 	
 	//Init the view matrix
 	camera_zoom_ = fmin(window_width_, window_height_) / 15000.0f;
 	view_matrix_ = glm::scale(glm::mat4(1.0f), glm::vec3(camera_zoom_, camera_zoom_, camera_zoom_));
-	//glm::vec3 eye(camera_zoom_, camera_zoom_, camera_zoom_);
-	//glm::vec3 center(0);
-	//view_matrix_ = glm::lookAt(eye, center, glm::cross(eye, center));
-	//shader_.SetUniformMat4("view_matrix", view_matrix_);
 
     // Set up z-buffer for rendering
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
 
     // Enable Alpha blending
-    glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    //glEnable(GL_BLEND);
+	
+	//Use this to disable vsync
 	//glfwSwapInterval(0);
 
 	SetAllTextures();
@@ -346,6 +430,8 @@ void View::SetAllTextures(void)
 	SetTexture(tex_[SHIELD], (resources_directory_+std::string("/Sprites/orb.png")).c_str());
 	SetTexture(tex_[POWERUP], (resources_directory_+std::string("/Sprites/powerup.png")).c_str());
 	SetTexture(tex_[BUOY], (resources_directory_+std::string("/buoy.png")).c_str());
+	SetTexture(tex_[FIRE], (resources_directory_+std::string("/fire.png")).c_str());
+	SetTexture(tex_[TEXT], (resources_directory_+std::string("/charmap-cellphone_white.png")).c_str());
     // glBindTexture(GL_TEXTURE_2D, tex_[0]);
 }
 

@@ -31,6 +31,8 @@ set(HDRS
 	include/weapon.hh
 	include/item.hh
 	include/shield.hh
+	include/text_object.hh
+	include/particle_system.hh
 )
  
 set(SRCS
@@ -49,11 +51,13 @@ set(SRCS
 	src/objects/shield_collectible.cc
 	src/objects/powerup.cc
 	src/objects/weapons/weapon.cc
+	src/objects/text_object.cc
 	src/entities/entity.cc
 	src/entities/enemy.cc
 	src/entities/buoy.cc
 	src/objects/items/item.cc
 	src/objects/items/shield.cc
+	src/objects/particle_system.cc
 )
 
 # Add path name to configuration file

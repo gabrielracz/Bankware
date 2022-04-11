@@ -39,6 +39,7 @@ int Controller::Start(){
 		}
 		last_time = current_time;
 
+		//Forward player controls
 		if(apply_thrust_) game_->PlayerThrust(delta_time);
 		if(apply_break_) game_->PlayerBreak();
 
@@ -49,7 +50,7 @@ int Controller::Start(){
 
 		if(apply_shoot_) game_->PlayerShoot();
 
-		view_->Update();
+		view_->Update(delta_time);
 		game_->Update(delta_time);
 	}
 	return 0;

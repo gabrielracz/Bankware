@@ -14,12 +14,22 @@
 
 class Controller;
 class GameObject;
+class TextObject;
+
+#define NUM_SHADERS 4
+enum Shaders {
+	SPRITE_SHADER = 0,
+	PARTICLE_SHADER,
+	TEXT_SHADER,
+	MAP_SHADER
+};
 
 class View {
 
 private:
 	Controller* controller_;
-
+	
+	float uptime_;
 	//WINDOW
 	std::string window_title_;
 	unsigned int window_width_;
@@ -31,7 +41,8 @@ private:
 	float camera_zoom_;
 	glm::mat4 view_matrix_;
 	glm::mat4 camera_matrix_;
-	Shader shader_;
+	Shader* shader_;
+	Shader shaders_[3];
 
 	//TEXTURES
 	std::string resources_directory_ = RESOURCES_DIRECTORY;
@@ -50,13 +61,16 @@ public:
 	~View();
 
 	int Init();
-	void Update();
+	void Update(float dt);
 
 	int CreateSprite(void);
 	void SetTexture(GLuint w, const char *fname);
 	void SetAllTextures(void);
 	void SetTitle(const char* title);
 	void RenderObject(GameObject* obj, const glm::mat4& parent_matrix = glm::mat4(1));
+	void RenderParticleSystem(GameObject* obj, const glm::mat4& parent_matrix = glm::mat4(1));
+	void RenderHUD();
+	//void RenderText(TextObject* obj);
 	bool IsVisible(GameObject* obj, float f = 1.0f);
 	bool GetCursorPos(glm::vec3 *vec);
 	void MouseMovementInput();

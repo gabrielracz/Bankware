@@ -6,40 +6,68 @@
 #include <glm/glm.hpp>
 #include "file_utils.hh"
 
+#define NUM_PARTICLES 400
+
 class Shader {
+private:
+	GLuint shader_program_;
 
-	public:
-		Shader(void);
-		~Shader();
+	// Geometry of sprite
+	GLuint vbo_sprite_;
+	GLuint ebo_sprite_;
+	int size_sprite_;
 
-		void Init(const char *vertPath, const char *fragPath);
+	// Geometry of particles
+	GLuint vbo_particles_;     
+	GLuint ebo_particles_;
+	int size_particles_;
 
-		void Enable();
-		void Disable();
+public:
+	Shader(void);
+	~Shader();
 
-		// Sets a uniform integer variable in your shader program to a value
-		void SetUniform1i(const GLchar *name, int value);
+	void Init(const char *vertPath, const char *fragPath);
 
-		// Sets a uniform float variable in your shader program to a value
-		void SetUniform1f(const GLchar *name, float value);
+	void Enable();
+	void Disable();
 
-		// Sets a uniform vector2 variable in your shader program to a vector
-		void SetUniform2f(const GLchar *name, const glm::vec2 &vector);
+	// Create geometry for sprite
+	void CreateSprite(void);
 
-		// Sets a uniform vector3 variable in your shader program to a vector
-		void SetUniform3f(const GLchar *name, const glm::vec3 &vector);
+	// Create geometry for particles
+	void CreateParticles(void);
 
-		// Sets a uniform vector4 variable in your shader program to a vector
-		void SetUniform4f(const GLchar *name, const glm::vec4 &vector);
+	// Set shader attributes for sprite
+	void SetSpriteAttributes(void);
 
-		// Sets a uniform matrix4x4 variable in your shader program to a matrix4x4
-		void SetUniformMat4(const GLchar *name, const glm::mat4 &matrix);
+	// Set shader attributes for particles
+	void SetParticleAttributes(void);
 
-		// Getters
-		inline GLuint GetShaderID() { return shader_program_; }
+	// Sets a uniform integer variable in your shader program to a value
+	void SetUniform1i(const GLchar *name, int value);
 
-	private:
-		GLuint shader_program_;
+	// Sets a uniform float variable in your shader program to a value
+	void SetUniform1f(const GLchar *name, float value);
+
+	// Sets a uniform vector2 variable in your shader program to a vector
+	void SetUniform2f(const GLchar *name, const glm::vec2 &vector);
+
+	// Sets a uniform vector3 variable in your shader program to a vector
+	void SetUniform3f(const GLchar *name, const glm::vec3 &vector);
+
+	// Sets a uniform vector4 variable in your shader program to a vector
+	void SetUniform4f(const GLchar *name, const glm::vec4 &vector);
+
+	// Sets a uniform matrix4x4 variable in your shader program to a matrix4x4
+	void SetUniformMat4(const GLchar *name, const glm::mat4 &matrix);
+
+	// Sets a uniform array of integers
+	void SetUniformIntArray(const GLchar *name, int len, const GLint *data);
+
+	// Getters
+	inline GLuint GetShaderID(void) { return shader_program_; }
+	inline int GetSpriteSize(void) { return size_sprite_; }
+	inline int GetParticleSize(void) { return size_particles_; }
 
 }; // class Shader
 

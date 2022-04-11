@@ -19,6 +19,8 @@ protected:
 	float mass_;
 	Hitbox hitbox_;
 
+	bool thrust_;
+
 	//Weapons
 	std::vector<Weapon*> weapons_;
 
@@ -50,9 +52,11 @@ public:
 	bool RaiseEvent(const std::string& event); //checks a given event against items and returns true if handled by an item
 
 	bool IsPoweredUp();
+	bool GetThrust();
 	void SetEffect(GLuint eff);
 	void SetScale(float s);
 	glm::vec3& GetVelocity();
+	inline glm::vec3& GetAcceleration() {return acceleration_;}
 	float GetMass();
 	void SetVelocity(const glm::vec3& v);
 	void SetPosition(const glm::vec3& p);

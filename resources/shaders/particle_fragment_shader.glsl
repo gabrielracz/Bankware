@@ -7,21 +7,16 @@ in vec2 uv_interp;
 
 // Texture sampler
 uniform sampler2D onetex;
-uniform bool inverted;
 
 void main()
 {
     // Sample texture
     vec4 color = texture2D(onetex, uv_interp);
+    color.rgb = vec3(0.9, 0.3, 0.002) * color_interp.r;
 
-	//Assign color to fragment
-	if(inverted){
-		gl_FragColor = vec4(color.b, color.g, color.r, color.a);
-	}else{
-		gl_FragColor = vec4(color.r, color.g, color.b, color.a);
-	}
-	
-	//gl_FragColor = vec4(color.r, color.g, color.b, color.a);
+    // Assign color to fragment
+    gl_FragColor = vec4(color.r, color.g, color.b, color.a);
+
     // Check for transparency
     if(color.a < 1.0)
     {
