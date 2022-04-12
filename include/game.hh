@@ -41,6 +41,10 @@ private:
 	Projectile* enemy_projectile_prototypes_[NUM_PROJECTILES];
 
 	void CheckPlayerInBorder();
+
+	bool game_over_;
+
+	void ClearGame();
 public:
 	Game(int world_width, int world_height);
 	~Game();
@@ -81,5 +85,8 @@ public:
 	const std::vector<TextObject*>& GetNotifications();
 
 	void WinGame();
+	void GameOver();
+	inline bool GetGameOver() const { return game_over_; }
+	inline void ClearNotifications() { notifications_.clear(); }
 };
 #endif

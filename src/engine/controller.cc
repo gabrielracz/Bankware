@@ -107,3 +107,11 @@ void Controller::HandleAbility(bool t, const std::string& ability)
 		can_handle_ability_ = true;
 	}
 }
+
+void Controller::HandleGameOver(bool t) {
+	if (t && game_->GetGameOver()) {
+		game_->ClearNotifications();
+		game_->Init();
+		view_->ResetUptime();
+	}
+}

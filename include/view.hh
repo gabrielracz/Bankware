@@ -76,6 +76,7 @@ public:
 	bool IsVisible(GameObject* obj, float f = 1.0f);
 	bool GetCursorPos(glm::vec3 *vec);
 	void MouseMovementInput();
+	inline void ResetUptime() { uptime_ = 0; }
 };
 
 #endif
