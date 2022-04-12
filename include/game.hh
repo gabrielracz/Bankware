@@ -19,7 +19,8 @@ enum EffectTypes {
 };
 
 enum ProjectileTypes {
-	PROJECTILE_BULLET = 0
+	PROJECTILE_BULLET = 0,
+	ENEMY_BULLET
 };
 
 class Game {
@@ -35,6 +36,7 @@ private:
 	int world_height_;
 	Effect* effect_prototypes_[NUM_EFFECTS];
 	Projectile* projectile_prototypes_[NUM_PROJECTILES];
+	Projectile* enemy_projectile_prototypes_[NUM_PROJECTILES];
 
 	void CheckPlayerInBorder();
 public:

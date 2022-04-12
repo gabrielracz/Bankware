@@ -1,7 +1,7 @@
 #ifndef DATA_H
 #define DATA_H
 #include "GL/gl.h"
-#define NUM_TEXTURES 16
+#define NUM_TEXTURES 18
 
 enum ObjectTypes : GLuint {
 	SHIP=0,
@@ -19,7 +19,9 @@ enum ObjectTypes : GLuint {
 	FIRE,
 	TEXT,
 	DASH,
-	BUFF
+	BUFF,
+	E_BULLET,
+	NONE
 };
 
 #endif
