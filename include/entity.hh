@@ -32,6 +32,11 @@ protected:
 
 	float power_up_cooldown_;
 
+	int health_;
+	float iframe_time_;
+	float current_iframe_time_;
+	virtual bool TakeDamage();
+
 public:
 	Entity(GLuint type, const glm::vec3& position, Game* game, float speed = 0.80, float mass = 1.0f);
 
