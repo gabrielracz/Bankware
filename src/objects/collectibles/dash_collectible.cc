@@ -11,6 +11,7 @@ void DashCollectible::HandleCollision(Entity *player){
         i->SetScale(0.2f);
         player->AddItem(i);
     } else {
+		game_->SpawnNotificiation("+Dash");
         player->AddItem(new Dash(DASH, glm::vec3(1.1,0,0), game_));
     }	
 	SetDestroyed();

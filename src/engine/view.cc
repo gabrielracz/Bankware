@@ -6,12 +6,18 @@
 #include <glm/gtx/quaternion.hpp>
 #include <glm/gtx/string_cast.hpp>
 #include <glm/gtx/transform.hpp>
+#include <ios>
+#include <ostream>
+#include <sstream>
 #include <string>
 #include "collectible.hh"
 #include "controller.hh"
 #include "data.hh"
 #include "game_object.hh"
+#include "text_object.hh"
 #include<iostream>
+#include <iomanip>
+
 
 View::View(const std::string& title, unsigned int window_width, unsigned int window_height, Controller* controller){
 	window_title_ = title;
@@ -159,30 +165,43 @@ void View::RenderParticleSystem(GameObject* obj, const glm::mat4& parent_matrix)
     glDrawElements(GL_TRIANGLES, shader_->GetParticleSize(), GL_UNSIGNED_INT, 0);
 }
 void View::RenderHUD(){
-#define TEXT_LENGTH 6
+	std::stringstream time;
+	time << std::fixed <<  std::setprecision(3) << uptime_;
+	RenderText(time.str(), glm::vec3(-0.80, 0.94, 0));
+
+	std::vector<TextObject*> notifs = controller_->GetNotifications();
+	for(auto n : notifs){
+		RenderText(n->GetText(), n->GetPosition());
+	}
+
+
+
+}
+
+void View::RenderText(const std::string &text, glm::vec3 pos, float size){
+#define TEXT_LENGTH 15
     glBindTexture(GL_TEXTURE_2D, tex_[TEXT]);
 	shader_ = &shaders_[TEXT_SHADER];
 	shader_->Enable();
-
-	float h = camera_zoom_*1;
-	float w = TEXT_LENGTH*0.75*(h);
-    glm::mat4 scaling_matrix = glm::scale(glm::mat4(1.0f), glm::vec3(w,h,1));
-
-	glm::vec3 pos (-0.81, 0.94, 0);
-    glm::mat4 translation_matrix = glm::translate(glm::mat4(1.0f), pos);
-	
-	shader_->SetUniformMat4("view_matrix", camera_matrix_);
-    shader_->SetUniformMat4("transformation_matrix", translation_matrix * scaling_matrix);
-
-	std::string text = std::to_string(uptime_);
-	//std::cout << text << std::endl;
+	shader_->SetSpriteAttributes();
 
 	// Set text length
 	int final_size = text.size();
 	if (final_size > TEXT_LENGTH){
 		final_size = TEXT_LENGTH;
 	}
+
 	shader_->SetUniform1i("text_len", final_size);
+	float h = camera_zoom_*1;
+	float w = final_size*0.75*(h);
+    glm::mat4 scaling_matrix = glm::scale(glm::mat4(1.0f), glm::vec3(w,h,1));
+
+    glm::mat4 translation_matrix = glm::translate(glm::mat4(1.0f), pos);
+	
+	shader_->SetUniformMat4("view_matrix", camera_matrix_);
+    shader_->SetUniformMat4("transformation_matrix", translation_matrix * scaling_matrix);
+	//std::cout << text << std::endl;
+
 
 	// Set the text data
 	GLint data[TEXT_LENGTH];

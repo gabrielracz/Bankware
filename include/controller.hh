@@ -1,3 +1,4 @@
+#include "text_object.hh"
 #include "view.hh"
 
 #include "game.hh"
@@ -44,6 +45,7 @@ public:
 	inline const std::vector<Projectile*>& GetProjectiles(){return game_->GetProjectiles();};
 	inline const std::vector<Effect*>& GetEffects(){return game_->GetEffects();};
 	inline const std::vector<Collectible*>& GetCollectibles(){return game_->GetCollectibles();};
+	inline const std::vector<TextObject*>& GetNotifications() {return game_->GetNotifications();}
 	inline Entity* GetPlayer(){return game_->GetPlayer();};
 };
 #endif
