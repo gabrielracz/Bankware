@@ -276,9 +276,6 @@ bool Game::CheckProjectileCollisions(Projectile *prj, float dt)
 
 		if (opp->IsDestroyed())
 			continue;
-		float prj_will_travel = prj->GetSpeed();
-		if(glm::length2(ep - pp) > prj_will_travel*prj_will_travel)
-			continue;
 		bool hit = prj->RayCircleCollision(opp->GetHitbox(), dt);
 		if (hit)
 		{

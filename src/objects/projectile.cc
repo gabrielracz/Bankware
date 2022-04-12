@@ -22,17 +22,17 @@ void Projectile::Update(float dt){
 	position_ += GetAngleVector() * speed_ * dt;
 }
 
+//detect collision between this ray and the given circle hitbox
 bool Projectile::RayCircleCollision(Hitbox& hitbox, float dt){
-	//detect collision between this ray and the given circle hitbox
+	//Don't shoot your creator
 	if(&hitbox == instigator_) return false;
 
-	glm::vec3 end = position_ + GetAngleVector() * speed_ * dt;
 	glm::vec3 cir = *hitbox.GetOrigin();
 	float r = hitbox.GetRadius();
-	//If the hitbox is further away than this frame's travel distance there is no collision
-	float distance_travelled = glm::length2(position_ - end);
-	float distance_to_target = glm::length2(position_ - cir) - r;
-	if(distance_to_target > distance_travelled){
+
+	float distance_to_target = glm::length2(position_ - cir) - r;   //Avoid expensive sqrt
+	float distance_travelled = speed_*dt;
+	if(distance_to_target > distance_travelled*distance_travelled){
 		return false;
 	}
 
