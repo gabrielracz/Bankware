@@ -29,6 +29,7 @@ public:
 	void ReduceCooldown(float cd);
 	void ResetCooldown();
 	void SetAimable(bool t);
+	inline void ClearWeapon() { shooting_angles_.clear(); }
 };
 
 #endif

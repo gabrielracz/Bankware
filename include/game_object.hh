@@ -39,6 +39,7 @@ public:
 	inline glm::vec3& GetPosition(void) { return position_; }
 	inline float GetScale(void) { return scale_; }
 	inline float GetAngle(void) { return angle_; }
+	inline float *GetAnglePointer(void) {return &angle_; }
 	glm::vec3 GetAngleVector(void);
 	inline bool IsDestroyed(void) { return destroyed_; }
 	inline bool IsInverted(void) {return draw_inverted_;}

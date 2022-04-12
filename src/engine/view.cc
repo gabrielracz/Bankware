@@ -450,6 +450,8 @@ void View::SetAllTextures(void)
 	SetTexture(tex_[TEXT], (resources_directory_+std::string("/charmap-cellphone_white.png")).c_str());
 	SetTexture(tex_[DASH], (resources_directory_+std::string("/dash.png")).c_str());
 	SetTexture(tex_[BUFF], (resources_directory_+std::string("/buff.png")).c_str());
+	SetTexture(tex_[E_BULLET], (resources_directory_+std::string("/enemy_bullet.png")).c_str());
+	SetTexture(tex_[NONE], (resources_directory_+std::string("/none.png")).c_str());
     // glBindTexture(GL_TEXTURE_2D, tex_[0]);
 }
 

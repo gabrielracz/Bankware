@@ -3,11 +3,12 @@
 #include <glm/fwd.hpp>
 #include <iostream>
 
-Projectile::Projectile(GLuint texture, const glm::vec3 &position, float angle, Game* game, float speed, float lifetime)
+Projectile::Projectile(GLuint texture, const glm::vec3 &position, float angle, Game* game, float speed, float lifetime, GLuint proj_type)
 	: GameObject(texture, position, game) {
 	angle_ = angle;
 	speed_ = speed;
 	lifetime_ = lifetime;
+	proj_type_ = proj_type;
 	SetScale(0.4);
 }
 

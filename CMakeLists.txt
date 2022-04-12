@@ -33,6 +33,7 @@ set(HDRS
 	include/text_object.hh
 	include/particle_system.hh
 	include/items.hh
+	include/satellite.hh
 )
  
 set(SRCS
@@ -64,6 +65,7 @@ set(SRCS
 	src/objects/items/speed_up.cc
 	src/objects/items/dashbuff.cc
 	src/objects/items/rate_of_fire.cc
+	src/entities/enemies/satellite.cc
 )
 
 # Add path name to configuration file
