@@ -2,7 +2,7 @@
 #define DATA_H
 #include "GL/gl.h"
 
-#define NUM_TEXTURES 22
+#define NUM_TEXTURES 23
 
 enum ObjectTypes : GLuint {
 	SHIP=0,
