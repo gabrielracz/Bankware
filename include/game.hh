@@ -10,6 +10,7 @@
 #include "projectile.hh"
 #include "effect.hh"
 #include "collectible.hh"
+#include "text_object.hh"
 
 #define NUM_EFFECTS 10
 #define NUM_PROJECTILES 10
@@ -30,6 +31,7 @@ private:
 	std::vector<Projectile*> projectiles_;
 	std::vector<Effect*> effects_;
 	std::vector<Collectible*> collectibles_;
+	std::vector<TextObject*> notifications_;
 	Entity* player_;
 
 	int world_width_;
@@ -60,6 +62,7 @@ public:
 
 	void SpawnBullet(GLuint projectile_index, glm::vec3& position, Hitbox* instigator, float angle);
 	void SpawnExplosion(GLuint effect_index, glm::vec3 position, float scale);
+	void SpawnNotificiation(const std::string& text);
 
 	void PlayerThrust(float dt);
 	void PlayerTurn(int t, float dt);
@@ -75,5 +78,6 @@ public:
 	const std::vector<Projectile*>& GetProjectiles();
 	const std::vector<Effect*>& GetEffects();
 	const std::vector<Collectible*>& GetCollectibles();
+	const std::vector<TextObject*>& GetNotifications();
 };
 #endif

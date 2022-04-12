@@ -7,13 +7,15 @@ RateOfFire::RateOfFire(GLuint type, const glm::vec3 &position, Game *game) : Ite
 
 void RateOfFire::Activate()
 {
-	printf("Rate of fire UP\n");
+	//printf("Rate of fire UP\n");
+	game_->SpawnNotificiation("+RateOfFire");
 	game_->GetPlayer()->ReduceWeaponCooldown(reduce_amount_);
 }
 
 void RateOfFire::Deactivate()
 {
-	printf("Rate of fire DOWN\n");
+	//printf("Rate of fire DOWN\n");
+	game_->SpawnNotificiation("-RateOfFire");
 	game_->GetPlayer()->ReduceWeaponCooldown(-reduce_amount_);
 	Item::Deactivate();
 }

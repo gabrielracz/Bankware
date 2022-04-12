@@ -12,6 +12,7 @@
 #include "item.hh"
 #include "items.hh"
 #include "collectibles.hh"
+#include "text_object.hh"
 #include "weapon.hh"
 #include <GLFW/glfw3.h>
 #include <glm/fwd.hpp>
@@ -227,6 +228,21 @@ void Game::Update(float dt)
 		else
 		{
 			eff->Update(dt);
+			it++;
+		}
+	}
+
+	for (auto it = notifications_.begin(); it != notifications_.end();)
+	{
+		TextObject *n = *it;
+		if (n->IsDestroyed())
+		{
+			it = notifications_.erase(it);
+			delete n;
+		}
+		else
+		{
+			n->Update(dt);
 			it++;
 		}
 	}
@@ -476,6 +492,17 @@ void Game::SpawnExplosion(GLuint eff_index, glm::vec3 position, float scale){
 	effects_.push_back(ex);
 }
 
+void Game::SpawnNotificiation(const std::string &text){
+	glm::vec3 startingpos (0,0.65,0);
+	float push_size = 0.1;
+	TextObject* t = new TextObject(TEXT, startingpos, this, 2.0f);
+	t->SetText(text);
+	notifications_.push_back(t);
+	for(int i = 0; i < notifications_.size(); i++){
+		notifications_[i]->SetPosition(notifications_[i]->GetPosition() + glm::vec3(0, push_size, 0));
+	}
+}
+
 // GETTERS AND FORWARDS
 void Game::PlayerThrust(float dt)
 {
@@ -530,6 +557,9 @@ const std::vector<Effect *> &Game::GetEffects()
 const std::vector<Collectible *> &Game::GetCollectibles()
 {
 	return collectibles_;
+}
+const std::vector<TextObject *>& Game::GetNotifications(){
+	return notifications_;
 }
 
 Entity *Game::GetPlayer()

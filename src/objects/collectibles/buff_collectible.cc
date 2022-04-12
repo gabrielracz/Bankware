@@ -11,6 +11,7 @@ void BuffCollectible::HandleCollision(Entity *player){
     std::default_random_engine eng(rd());
     std::uniform_real_distribution<float> distr(0, 1);
 	Item* i;
+	std::string notif;
 	if(distr(eng) > 0.5) {
 		i = new SpeedUp(BUFF, glm::vec3(0.8,0,0), game_);
 	} else {
