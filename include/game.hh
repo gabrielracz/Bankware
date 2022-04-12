@@ -79,5 +79,7 @@ public:
 	const std::vector<Effect*>& GetEffects();
 	const std::vector<Collectible*>& GetCollectibles();
 	const std::vector<TextObject*>& GetNotifications();
+
+	void WinGame();
 };
 #endif

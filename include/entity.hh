@@ -51,7 +51,7 @@ public:
 	void LookAtPoint(glm::vec3);
 	virtual void Shoot();
 	bool CheckCollision(Hitbox& hbox);
-	void Explode();
+	virtual void Explode();
 	bool CheckShield();
 	void PowerUp(float time);
 

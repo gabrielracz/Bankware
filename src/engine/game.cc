@@ -24,6 +24,7 @@
 #include <array>
 #include "satellite.hh"
 #include "shotgunner.hh"
+#include "gate.hh"
 
 Game::Game(int width, int height)
 {
@@ -590,4 +591,9 @@ Entity *Game::GetPlayer()
 glm::vec3 &Game::GetPlayerPosition()
 {
 	return player_->GetPosition();
+}
+
+void Game::WinGame()
+{
+	printf("LETS GO!\n");
 }
