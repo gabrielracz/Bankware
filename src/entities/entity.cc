@@ -82,7 +82,11 @@ void Entity::Update(float dt)
 			}
 		}
 	}
+	UpdateIFrames(dt);
+}
 
+void Entity::UpdateIFrames(float dt)
+{
 	if (current_iframe_time_ > 0)
 	{
 		current_iframe_time_ -= dt;
@@ -93,6 +97,7 @@ void Entity::Update(float dt)
 		}
 	}
 }
+
 
 void Entity::SetEffect(GLuint eff)
 {
