@@ -5,7 +5,8 @@ Shotgunner::Shotgunner(GLuint texture, const glm::vec3 &position, const glm::vec
 {
     spread_amount_ = 2;
     recoil_force_ = 1.5f;
-    Weapon *w = new Weapon(NONE, ENEMY_BULLET, glm::vec3(0), game);
+    Weapon *w = new Weapon(CANNON, ENEMY_BULLET, glm::vec3(0, 0.5, 0), game);
+	w->SetScale(1.5);
     for (int i = 1; i < spread_amount_; ++i)
     {
         w->AddShootingAngle(i * glm::pi<float>() / 12);
