@@ -1,0 +1,46 @@
+#ifndef DATA_H
+#define DATA_H
+#include "GL/gl.h"
+
+<<<<<<< HEAD
+#define NUM_TEXTURES 25
+=======
+#define NUM_TEXTURES 29
+>>>>>>> 2001cde0b38f21c165d06e94ae65502dac0eebc4
+
+enum ObjectTypes : GLuint {
+	SHIP=0,
+	GRID,
+	BACKGROUND1,
+	BACKGROUND2,
+	BACKGROUND3,
+	BACKGROUND4,
+	ENEMY,
+	BLADE,
+	BULLET,
+	EXPLOSION,
+	SHIELD,
+	POWERUP,
+	BUOY,
+	FIRE,
+	PARTICLE_EXPLOSION,
+	TEXT,
+	DASH,
+	BUFF,
+	E_BULLET,
+	NONE,
+	CANNON,
+	GUNNER,
+	WEAPON_C,
+<<<<<<< HEAD
+	MAP
+=======
+	REDKEY,
+	BLUEKEY,
+	YELLOWKEY,
+	GATE_OPEN,
+	GATE_CLOSED
+>>>>>>> 2001cde0b38f21c165d06e94ae65502dac0eebc4
+};
+
+#endif

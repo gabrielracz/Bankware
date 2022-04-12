@@ -286,6 +286,7 @@ bool Entity::GetThrust()
 
 void Entity::ReduceWeaponCooldown(float cd)
 {
+	if(weapons_.empty()) return;
 	int i = rand() % weapons_.size();
 	weapons_[i]->ReduceCooldown(cd);
 }
