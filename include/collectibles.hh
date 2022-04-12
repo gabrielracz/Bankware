@@ -23,4 +23,9 @@ public:
 	BuffCollectible(GLuint type, const glm::vec3& position, Game* game);
 	void HandleCollision(Entity* player) override;
 };
+
+class WeaponCollectible : public Collectible {
+	WeaponCollectible(GLuint type, const glm::vec3& position, Game* game);
+	void HandleCollision(Entity* player) override;
+};
 #endif // COLLECTIBLES_H
