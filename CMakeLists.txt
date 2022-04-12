@@ -35,6 +35,7 @@ set(HDRS
 	include/items.hh
 	include/satellite.hh
 	include/shotgunner.hh
+	include/gate.hh
 )
  
 set(SRCS
@@ -71,6 +72,7 @@ set(SRCS
 	src/objects/items/keys.cc
 	src/entities/enemies/satellite.cc
 	src/entities/enemies/shotgunner.cc
+	src/entities/enemies/gate.cc
 )
 
 # Add path name to configuration file
