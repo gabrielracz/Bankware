@@ -89,11 +89,13 @@ int Game::Init()
 	ParticleSystem *thrust = new ParticleSystem(FIRE, glm::vec3(0, -0.75, 0), player_, this);
 	player_->AddChild(thrust);
 
-	Weapon *right_cannon = new Weapon(BULLET, PROJECTILE_BULLET, glm::vec3(1, 0.5, 0), this);
+	Weapon *right_cannon = new Weapon(CANNON, PROJECTILE_BULLET, glm::vec3(1, 0.5, 0), this, 0.1);
+	right_cannon->SetScale(2);
 	right_cannon->SetAimable(true);
 	player_->AddWeapon(right_cannon);
-	Weapon *left_cannon = new Weapon(BULLET, PROJECTILE_BULLET, glm::vec3(-1, 0.5, 0), this);
+	Weapon *left_cannon = new Weapon(CANNON, PROJECTILE_BULLET, glm::vec3(-1, 0.5, 0), this, 0.1);
 	left_cannon->SetAimable(true);
+	left_cannon->SetScale(2);
 	player_->AddWeapon(left_cannon);
 	// Weapon* booty_cannon = new Weapon(BULLET, PROJECTILE_BULLET, glm::vec3(0.0, -1, 0), this);
 	// booty_cannon->SetAngle(glm::pi<float>());
@@ -116,7 +118,9 @@ int Game::Init()
 	{
 		float randx = rand() % world_width_ - (float)world_width_ / 2;
 		float randy = rand() % world_height_ - (float)world_height_ / 2;
-		entities_.emplace_back(new Shotgunner(ENEMY, glm::vec3(randx, randy, 0), glm::vec3(randx - rand() % 3, randy, 0), this));
+		Shotgunner* s = new Shotgunner(GUNNER, glm::vec3(randx, randy, 0), glm::vec3(randx - rand() % 3, randy, 0), this);
+		s->SetScale(2.2);
+		entities_.push_back(s);
 	}
 
 	// Initialize Buoys
@@ -423,12 +427,9 @@ void Game::HandleEntityCollision(Entity *e1, Entity *e2)
 {
 	GLuint t1 = e1->GetType();
 	GLuint t2 = e2->GetType();
-	if ((t1 == SHIP && t2 == ENEMY) || (t1 == ENEMY && t2 == SHIP))
-	{
-		e1->Explode();
-		e2->Explode();
-	}
-	else if (t1 == BUOY || t2 == BUOY)
+
+
+	if (t1 == BUOY || t2 == BUOY)
 	{
 		// Elastic collision
 		float m1 = e1->GetMass();
@@ -450,6 +451,9 @@ void Game::HandleEntityCollision(Entity *e1, Entity *e2)
 		{
 			e1->SetPosition(e1->GetPosition() + n * (overlap * 2));
 		}
+	}else {
+		e1->Explode();
+		e2->Explode();
 	}
 }
 
