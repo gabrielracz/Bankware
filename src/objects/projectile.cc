@@ -28,8 +28,10 @@ bool Projectile::RayCircleCollision(Hitbox& hitbox, float dt){
 	glm::vec3 cir = *hitbox.GetOrigin();
 	float r = hitbox.GetRadius();
 	//If the hitbox is further away than this frame's travel distance there is no collision
-	float distance_travelled = glm::distance(position_, end);
-	float distance_to_target = glm::distance(position_, cir) - r;
+	//float distance_travelled = glm::distance(position_, end);
+	//float distance_to_target = glm::distance(position_, cir) - r;
+	float distance_travelled = glm::length2(position_ - end);
+	float distance_to_target = glm::length2(position_ - cir) - r;
 	if(distance_to_target > distance_travelled){
 		return false;
 	}
@@ -47,8 +49,9 @@ bool Projectile::RayCircleCollision(Hitbox& hitbox, float dt){
 		return false;
 
 	//quadratic equation
-	float t1 = (-b + sqrt(discriminant)) / 2*a;
-	float t2 = (-b - sqrt(discriminant)) / 2*a;
+	float sqrt_disc = sqrt(discriminant);
+	float t1 = (-b + sqrt_disc) / 2*a;
+	float t2 = (-b - sqrt_disc) / 2*a;
 
 	if(t1 < 0 && t2 < 0)  //Collision occurs in the opposite direction to the bullet's travel
 		return false;

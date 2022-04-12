@@ -231,7 +231,7 @@ void Shader::CreateParticleExplosion(void)
 			//theta = (2.0*(rand() % 10000) / 10000.0f -1.0f)*0.18f + pi;
 			theta = fmod((two_pi*(rand() % 1000) / 1000.0f - 1.0f), two_pi);
 			r = 0.4f + 1*(rand() % 10000) / 10000.0f;
-			tmod = glm::clamp((rand() % 10000) / 10000.0f, 0.0f, pi/2);
+			tmod = glm::clamp((rand() % 10000) / 10000.0f, 0.0f, pi/4);
         }
 
         // Position    
