@@ -72,13 +72,13 @@ int Game::Init()
 	float tile_size = 2;
 	int tiles_wide = world_width_ / tile_size;
 	int tiles_high = world_height_ / tile_size;
+	//MAP IS TILED FROM BOTTOM LEFT TO TOP RIGHT
 	for (int y = 0; y < world_height_; y += tile_size)
 	{
 		for (int x = 0; x < world_width_; x += tile_size)
 		{
 			GameObject* bkg;
 			if(x > world_width_*0.80 && y < world_height_*0.20){   //Bottom right corner
-				std::cout << x << world_width_/6 << std::endl;
 				bkg = new GameObject(GRID, glm::vec3(x - world_width_ / 2, y - world_height_ / 2, 0), this);
 			}else{
 				int r = rand() % 4;
@@ -89,6 +89,7 @@ int Game::Init()
 			backgrounds_.push_back(bkg);
 		}
 	}
+
 
 	// Initialze player
 	player_ = new Entity(SHIP, glm::vec3(0, 0, 0), this, 0.45);

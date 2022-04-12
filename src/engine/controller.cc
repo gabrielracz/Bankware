@@ -4,7 +4,7 @@
 #include <string>
 
 Controller::Controller(){
-	title_ = "Assignment4 - Gabriel Racz";		
+	title_ = "Bankware";		
 	view_ = new View(title_, 1000, 1000, this);
 	view_->Init();
 

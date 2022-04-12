@@ -285,6 +285,11 @@ void View::MouseInput(GLFWwindow* window, int key, int action, int mods){
 			controller->HandleAbility(false, "dash");
 		}
 	}
+	if(key == GLFW_MOUSE_BUTTON_MIDDLE){
+		glm::vec3 cursor;
+		controller->view_->GetCursorPos(&cursor);
+		std::cout << cursor.x << ", " << cursor.y << std::endl;
+	}
 }
 
 bool View::GetCursorPos(glm::vec3 *vec){
@@ -476,6 +481,7 @@ void View::SetAllTextures(void)
 	SetTexture(tex_[WEAPON_C], (resources_directory_+std::string("/weapon_c.png")).c_str());
 	SetTexture(tex_[CANNON], (resources_directory_+std::string("/cannon.png")).c_str());
 	SetTexture(tex_[GUNNER], (resources_directory_+std::string("/gunner.png")).c_str());
+	SetTexture(tex_[MAP], (resources_directory_+std::string("/map.png")).c_str());
     // glBindTexture(GL_TEXTURE_2D, tex_[0]);
 }
 

@@ -2,7 +2,7 @@
 #define DATA_H
 #include "GL/gl.h"
 
-#define NUM_TEXTURES 24
+#define NUM_TEXTURES 25
 
 enum ObjectTypes : GLuint {
 	SHIP=0,
@@ -27,7 +27,8 @@ enum ObjectTypes : GLuint {
 	NONE,
 	CANNON,
 	GUNNER,
-	WEAPON_C
+	WEAPON_C,
+	MAP
 };
 
 #endif
