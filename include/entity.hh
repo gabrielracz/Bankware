@@ -36,6 +36,7 @@ protected:
 	float iframe_time_;
 	float current_iframe_time_;
 	virtual bool TakeDamage();
+	void UpdateIFrames(float dt);
 
 public:
 	Entity(GLuint type, const glm::vec3& position, Game* game, float speed = 0.80, float mass = 1.0f);
@@ -47,7 +48,7 @@ public:
 	void Thrust(float dt); 
 	void Break();
 	void LookAtPoint(glm::vec3);
-	void Shoot();
+	virtual void Shoot();
 	bool CheckCollision(Hitbox& hbox);
 	void Explode();
 	bool CheckShield();
