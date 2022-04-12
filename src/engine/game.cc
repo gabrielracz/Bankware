@@ -74,22 +74,71 @@ int Game::Init()
 	int tiles_wide = world_width_ / tile_size;
 	int tiles_high = world_height_ / tile_size;
 	//MAP IS TILED FROM BOTTOM LEFT TO TOP RIGHT
-	for (int y = 0; y < world_height_; y += tile_size)
+	for (int y = -world_height_/2; y < world_height_/2; y += tile_size)
 	{
-		for (int x = 0; x < world_width_; x += tile_size)
+		for (int x = -world_width_/2; x < world_width_/2; x += tile_size)
 		{
 			GameObject* bkg;
-			if(x > world_width_*0.80 && y < world_height_*0.20){   //Bottom right corner
-				bkg = new GameObject(GRID, glm::vec3(x - world_width_ / 2, y - world_height_ / 2, 0), this);
+			if(x > 60 && y < -60){   //Bottom right corner
+				bkg = new GameObject(GRID, glm::vec3(x, y, 0), this);
+			}else if(x < -70 && y < -70){
+				bkg = new GameObject(GRID, glm::vec3(x, y, 0), this);
 			}else{
 				int r = rand() % 4;
 				GLuint bgs[] = {BACKGROUND1, BACKGROUND2, BACKGROUND3, BACKGROUND4};
-				bkg = new GameObject(bgs[r], glm::vec3(x - world_width_ / 2, y - world_height_ / 2, 0), this);
+				bkg = new GameObject(bgs[r], glm::vec3(x, y, 0), this);
 			}
 			bkg->SetScale(tile_size);
 			backgrounds_.push_back(bkg);
 		}
 	}
+	std::random_device rd;
+	std::default_random_engine eng(rd());
+	
+	std::uniform_real_distribution<float> rad(1, 3);
+	std::uniform_real_distribution<float> z1_y(-100, -50);
+	std::uniform_real_distribution<float> z1_x(50, 100);
+	//Get value with distr(eng)
+	
+	//============ ZONE 1 ===========================
+	for(int i = 0; i < 25; i++){
+		float randy = z1_y(eng);
+		float randx = z1_x(eng);
+		entities_.emplace_back(new Enemy(ENEMY, glm::vec3(randx, randy , 0), glm::vec3(randx - rad(eng), randy, 0), this));
+	}
+		
+	collectibles_.push_back(new PeaShooterCollectible(WEAPON_C, glm::vec3(80, -80, 0), this));
+
+	collectibles_.push_back(new BuffCollectible(BUFF, glm::vec3(90, -92, 0), this));
+	collectibles_.push_back(new BuffCollectible(BUFF, glm::vec3(90, -88, 0), this));
+	collectibles_.push_back(new BuffCollectible(BUFF, glm::vec3(92, -90, 0), this));
+	collectibles_.push_back(new BuffCollectible(BUFF, glm::vec3(88, -90, 0), this));
+	collectibles_.push_back(new RedKeyCollectible(REDKEY, glm::vec3(90, -90, 0), this));
+	
+	//============ ZONE 2 =========================
+	
+	std::uniform_real_distribution<float> z2_y(-100, -50);
+	std::uniform_real_distribution<float> z2_x(-100, -50);
+
+	for(int i = 0; i < 30; i++){
+		float randy = z2_y(eng);
+		float randx = z2_x(eng);
+		entities_.emplace_back(new Enemy(ENEMY, glm::vec3(randx, randy , 0), glm::vec3(randx - rad(eng), randy, 0), this));
+	}
+
+	entities_.push_back(new Satellite(BUOY, glm::vec3(-100, -72, 0), this, 3));
+	entities_.push_back(new Satellite(BUOY, glm::vec3(-83, -72, 0), this, 8));
+	entities_.push_back(new Satellite(BUOY, glm::vec3(-72, -72, 0), this, 3));
+	entities_.push_back(new Satellite(BUOY, glm::vec3(-72, -84, 0), this, 8));
+	entities_.push_back(new Satellite(BUOY, glm::vec3(-72, -100, 0), this, 3));
+	entities_.push_back(new Satellite(BUOY, glm::vec3(-90, -90, 0), this, 2));
+	entities_.push_back(new Satellite(BUOY, glm::vec3(-90, -76, 0), this, 2));
+	entities_.push_back(new Satellite(BUOY, glm::vec3(-80, -80, 0), this, 2));
+	collectibles_.push_back(new BlueKeyCollectible(BLUEKEY, glm::vec3(-98, -98, 0), this));
+	collectibles_.push_back(new LeftCannonCollectible(CANNON, glm::vec3(-99, -99, 0), this));
+	collectibles_.push_back(new Powerup(POWERUP, glm::vec3(-99, -98, 0), this));
+	
+	
 
 
 	// Initialze player
@@ -97,14 +146,14 @@ int Game::Init()
 	ParticleSystem *thrust = new ParticleSystem(FIRE, glm::vec3(0, -0.75, 0), player_, this);
 	player_->AddChild(thrust);
 
-	Weapon *right_cannon = new Weapon(CANNON, PROJECTILE_BULLET, glm::vec3(1, 0.5, 0), this, 0.1);
-	right_cannon->SetScale(2);
-	right_cannon->SetAimable(true);
-	player_->AddWeapon(right_cannon);
-	Weapon *left_cannon = new Weapon(CANNON, PROJECTILE_BULLET, glm::vec3(-1, 0.5, 0), this, 0.1);
-	left_cannon->SetAimable(true);
-	left_cannon->SetScale(2);
-	player_->AddWeapon(left_cannon);
+	//Weapon *right_cannon = new Weapon(CANNON, PROJECTILE_BULLET, glm::vec3(1, 0.5, 0), this, 0.1);
+	//right_cannon->SetScale(2);
+	//right_cannon->SetAimable(true);
+	//player_->AddWeapon(right_cannon);
+	//Weapon *left_cannon = new Weapon(CANNON, PROJECTILE_BULLET, glm::vec3(-1, 0.5, 0), this, 0.1);
+	//left_cannon->SetAimable(true);
+	//left_cannon->SetScale(2);
+	//player_->AddWeapon(left_cannon);
 	// Weapon* booty_cannon = new Weapon(BULLET, PROJECTILE_BULLET, glm::vec3(0.0, -1, 0), this);
 	// booty_cannon->SetAngle(glm::pi<float>());
 	// player_->AddWeapon(booty_cannon);
@@ -119,7 +168,7 @@ int Game::Init()
 	{
 		float randx = rand() % world_width_ - (float)world_width_ / 2;
 		float randy = rand() % world_height_ - (float)world_height_ / 2;
-		entities_.emplace_back(new Enemy(ENEMY, glm::vec3(randx, randy, 0), glm::vec3(randx - rand() % 3, randy, 0), this));
+		//entities_.emplace_back(new Enemy(ENEMY, glm::vec3(randx, randy, 0), glm::vec3(randx - rand() % 3, randy, 0), this));
 	}
 
 	for (int i = 0; i < 50; i++)
@@ -128,7 +177,7 @@ int Game::Init()
 		float randy = rand() % world_height_ - (float)world_height_ / 2;
 		Shotgunner* s = new Shotgunner(GUNNER, glm::vec3(randx, randy, 0), glm::vec3(randx - rand() % 3, randy, 0), this);
 		s->SetScale(2.2);
-		entities_.push_back(s);
+		//entities_.push_back(s);
 	}
 
 	// Initialize Buoys
@@ -140,7 +189,7 @@ int Game::Init()
 		float randy = rand() % world_height_ - (float)world_height_ / 2;
 		float randmass = mass_values[rand() % 3];
 		Satellite* s = new Satellite(BUOY, glm::vec3(randx, randy, 0), this, randmass);
-		entities_.push_back(s);
+		//entities_.push_back(s);
 	}
 
 	// Initialize Powerups

@@ -1,7 +1,7 @@
 #include "items.hh"
 #include "game.hh"
 
-SpeedUp::SpeedUp(GLuint type, const glm::vec3 &position, Game *game) : Item(type, position, game), speed_buff_amount_(0.1f)
+SpeedUp::SpeedUp(GLuint type, const glm::vec3 &position, Game *game) : Item(type, position, game), speed_buff_amount_(0.05f)
 {
 }
 

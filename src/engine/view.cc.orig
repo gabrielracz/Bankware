@@ -178,7 +178,7 @@ void View::RenderHUD(){
 }
 
 void View::RenderText(const std::string &text, glm::vec3 pos, float size, bool inverted){
-#define TEXT_LENGTH 25
+#define TEXT_LENGTH 15
     glBindTexture(GL_TEXTURE_2D, tex_[TEXT]);
 	shader_ = &shaders_[TEXT_SHADER];
 	shader_->Enable();
@@ -481,11 +481,15 @@ void View::SetAllTextures(void)
 	SetTexture(tex_[WEAPON_C], (resources_directory_+std::string("/weapon_c.png")).c_str());
 	SetTexture(tex_[CANNON], (resources_directory_+std::string("/cannon.png")).c_str());
 	SetTexture(tex_[GUNNER], (resources_directory_+std::string("/gunner.png")).c_str());
+<<<<<<< HEAD
+	SetTexture(tex_[MAP], (resources_directory_+std::string("/map.png")).c_str());
+=======
 	SetTexture(tex_[REDKEY], (resources_directory_+std::string("/redkey.png")).c_str());
 	SetTexture(tex_[BLUEKEY], (resources_directory_+std::string("/bluekey.png")).c_str());
 	SetTexture(tex_[YELLOWKEY], (resources_directory_+std::string("/yellowkey.png")).c_str());
 	SetTexture(tex_[GATE_OPEN], (resources_directory_+std::string("/none.png")).c_str());
 	SetTexture(tex_[GATE_CLOSED], (resources_directory_+std::string("/none.png")).c_str());
+>>>>>>> 2001cde0b38f21c165d06e94ae65502dac0eebc4
     // glBindTexture(GL_TEXTURE_2D, tex_[0]);
 }
 
