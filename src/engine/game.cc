@@ -67,6 +67,7 @@ void Game::InitPrototypes(){
 // Init the initial game state
 int Game::Init()
 {
+	game_over_ = false;
 	InitPrototypes();
 	srand(time(NULL));
 	// Tile the world
@@ -262,6 +263,9 @@ void Game::Update(float dt)
 			it = entities_.erase(it);
 			if (ent != player_)
 				delete ent;
+			if(ent == player_) {
+				GameOver();
+			}
 		}
 		else
 		{
@@ -645,5 +649,24 @@ glm::vec3 &Game::GetPlayerPosition()
 
 void Game::WinGame()
 {
-	printf("LETS GO!\n");
+	game_over_ = true;
+	ClearGame();
+	SpawnNotificiation("-YOU WIN!");
+}
+
+void Game::GameOver()
+{
+	game_over_ = true;
+	ClearGame();
+	SpawnNotificiation("GAME OVER :(");
+}
+
+void Game::ClearGame()
+{
+	backgrounds_.clear();
+	entities_.clear();
+	projectiles_.clear();
+	effects_.clear();
+	collectibles_.clear();
+	notifications_.clear();
 }
