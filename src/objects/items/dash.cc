@@ -50,7 +50,7 @@ bool Dash::Event(const std::string &event)
     {
         if (dash_cooldown_ < time_since_last_dash_)
         {
-            printf("DASH\n");
+            //printf("DASH\n");
             time_since_last_dash_ = 0;
             game_->PlayerThrust(dash_power_);
             return true;

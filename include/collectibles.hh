@@ -24,10 +24,28 @@ public:
 	void HandleCollision(Entity* player) override;
 };
 
-class WeaponCollectible : public Collectible {
+class PeaShooterCollectible : public Collectible {
 
 public:
-	WeaponCollectible(GLuint type, const glm::vec3& position, Game* game);
+	PeaShooterCollectible(GLuint type, const glm::vec3& position, Game* game);
+	void HandleCollision(Entity* player) override;
+};
+
+class DualCannonCollectible : public Collectible {
+public:
+	DualCannonCollectible(GLuint type, const glm::vec3& position, Game* game);
+	void HandleCollision(Entity* player) override;
+};
+
+class RightCannonCollectible : public Collectible {
+public:
+	RightCannonCollectible(GLuint type, const glm::vec3& position, Game* game);
+	void HandleCollision(Entity* player) override;
+};
+
+class LeftCannonCollectible : public Collectible {
+public:
+	LeftCannonCollectible(GLuint type, const glm::vec3& position, Game* game);
 	void HandleCollision(Entity* player) override;
 };
 #endif // COLLECTIBLES_H

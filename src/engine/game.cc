@@ -169,7 +169,7 @@ int Game::Init()
 	{
 		float randx = rand() % world_width_ - (float)world_width_ / 2;
 		float randy = rand() % world_height_ - (float)world_height_ / 2;
-		collectibles_.push_back(new WeaponCollectible(WEAPON_C, glm::vec3(randx, randy, 0), this));
+		collectibles_.push_back(new PeaShooterCollectible(WEAPON_C, glm::vec3(randx, randy, 0), this));
 	}
 
 	// Initialize collectible shields

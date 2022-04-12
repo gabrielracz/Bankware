@@ -54,7 +54,7 @@ set(SRCS
 	src/objects/collectibles/dash_collectible.cc
 	src/objects/collectibles/buff_collectible.cc
 	src/objects/collectibles/powerup.cc
-	src/objects/collectibles/weapon_collectible.cc
+	src/objects/collectibles/weapon_collectibles.cc
 	src/objects/weapons/weapon.cc
 	src/objects/text_object.cc
 	src/entities/entity.cc
