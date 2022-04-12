@@ -55,6 +55,7 @@ set(SRCS
 	src/objects/collectibles/buff_collectible.cc
 	src/objects/collectibles/powerup.cc
 	src/objects/collectibles/weapon_collectibles.cc
+	src/objects/collectibles/key_collectibles.cc
 	src/objects/weapons/weapon.cc
 	src/objects/text_object.cc
 	src/entities/entity.cc
@@ -67,6 +68,7 @@ set(SRCS
 	src/objects/items/speed_up.cc
 	src/objects/items/dashbuff.cc
 	src/objects/items/rate_of_fire.cc
+	src/objects/items/keys.cc
 	src/entities/enemies/satellite.cc
 	src/entities/enemies/shotgunner.cc
 )
