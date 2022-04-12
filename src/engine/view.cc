@@ -35,7 +35,9 @@ View::~View(){
 
 
 void View::Update(float dt){
-	uptime_ += dt;
+	if(!controller_->GetGameOver()) {
+		uptime_ += dt;
+	}
 	if(glfwWindowShouldClose(window_)){
 		controller_->HandleQuit();
 		return;
@@ -264,6 +266,12 @@ void View::KeyInput(GLFWwindow* window, int key, int scancode, int action, int m
 			controller->HandleShoot(false);
 		}else{
 			controller->HandleShoot(true);
+		}
+	}
+
+	if (key == GLFW_KEY_R){
+		if(action == GLFW_PRESS){
+			controller->HandleGameOver(true);
 		}
 	}
 }

@@ -39,6 +39,8 @@ public:
 	void HandleShoot(bool t);
 	void PlayerLook(bool t, glm::vec3& v);
 	void HandleAbility(bool t, const std::string& ability);
+	void HandleGameOver(bool t);
+	inline bool GetGameOver() const { return game_->GetGameOver(); }
 
 	inline const std::vector<Entity*>& GetEntities(){return game_->GetEntities();};
 	inline const std::vector<GameObject*>& GetBackgrounds(){return game_->GetBackgrounds();};
