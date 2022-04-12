@@ -57,4 +57,23 @@ public:
 	virtual void Activate() override;
 	virtual void Deactivate() override;
 };
+
+class RedKey : public Item {
+public:
+	RedKey(GLuint type, const glm::vec3 &position, Game *game);
+	virtual bool Event(const std::string &event) override;
+};
+
+
+class BlueKey : public Item {
+public:
+	BlueKey(GLuint type, const glm::vec3 &position, Game *game);
+	virtual bool Event(const std::string &event) override;
+};
+
+class YellowKey : public Item {
+public:
+	YellowKey(GLuint type, const glm::vec3 &position, Game *game);
+	virtual bool Event(const std::string &event) override;
+};
 #endif // ITEMS_H
