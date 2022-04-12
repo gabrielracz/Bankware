@@ -289,3 +289,20 @@ void Entity::ReduceWeaponCooldown(float cd)
 	int i = rand() % weapons_.size();
 	weapons_[i]->ReduceCooldown(cd);
 }
+
+bool Entity::HasWeapon(const std::string& tag)
+{
+	if(tag == "none") {
+		return false;
+	}
+	return (std::any_of(weapons_.begin(), weapons_.end(), [tag](Weapon* w){return w->GetTag() == tag; }));
+}
+
+Weapon* Entity::GetWeapon(const std::string& tag)
+{
+	std::vector<Weapon*>::iterator w = std::find_if(weapons_.begin(), weapons_.end(), [tag](Weapon* w){return w->GetTag() == tag; });
+	if(w != weapons_.end()) {
+		return *w;
+	}
+	return nullptr;
+}

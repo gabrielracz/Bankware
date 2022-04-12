@@ -1,6 +1,7 @@
 #ifndef WEAPON_H
 #define WEAPON_H
 #include "game_object.hh"
+#include <string>
 
 class Entity;
 
@@ -17,9 +18,11 @@ protected:
 
 	bool aimable_;
 
+	std::string tag_;
+
 	GLuint projectile_type_;
 public:
-	Weapon(GLuint weapon_type, GLuint projectile_type, const glm::vec3& position, Game* game, float cooldown = 0.1f);
+	Weapon(GLuint weapon_type, GLuint projectile_type, const glm::vec3& position, Game* game, float cooldown = 0.1f, const std::string& tag = "none");
 	virtual void Update(float delta_time) override;
 	virtual void Shoot();
 
@@ -32,6 +35,10 @@ public:
 	void ReduceCooldown(float cd);
 	void ResetCooldown();
 	void SetAimable(bool t);
+
+	inline const std::string& GetTag() const { return tag_; }
+	inline void SetTag(const std::string& tag) { tag_ = tag; }
+
 	inline void ClearWeapon() { shooting_angles_.clear(); }
 };
 

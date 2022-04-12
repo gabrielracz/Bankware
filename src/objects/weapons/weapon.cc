@@ -8,7 +8,7 @@
 #include <glm/trigonometric.hpp>
 #include <iostream>
 
-Weapon::Weapon(GLuint weapon_type, GLuint projectile_type, const glm::vec3& position, Game* game, float cooldown)
+Weapon::Weapon(GLuint weapon_type, GLuint projectile_type, const glm::vec3& position, Game* game, float cooldown, const std::string& tag)
 	:GameObject(weapon_type, position, game){
 
 	//parent_position_ = parent_position;
@@ -19,6 +19,7 @@ Weapon::Weapon(GLuint weapon_type, GLuint projectile_type, const glm::vec3& posi
 	projectile_type_ = projectile_type;
 	shooting_angles_.push_back(angle_);
 	aimable_ = false;
+	tag_ = tag;
 
 }
 
