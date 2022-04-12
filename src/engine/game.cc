@@ -135,7 +135,8 @@ int Game::Init()
 	entities_.push_back(new Satellite(BUOY, glm::vec3(-90, -76, 0), this, 2));
 	entities_.push_back(new Satellite(BUOY, glm::vec3(-80, -80, 0), this, 2));
 	collectibles_.push_back(new BlueKeyCollectible(BLUEKEY, glm::vec3(-98, -98, 0), this));
-	collectibles_.push_back(new LeftCannonCollectible(CANNON, glm::vec3(-99, -99, 0), this));
+	collectibles_.push_back(new LeftCannonCollectible(CANNON, glm::vec3(-62, -87, 0), this));
+	collectibles_.push_back(new LeftCannonCollectible(CANNON, glm::vec3(-84, -60, 0), this));
 	collectibles_.push_back(new Powerup(POWERUP, glm::vec3(-99, -98, 0), this));
 	
 	

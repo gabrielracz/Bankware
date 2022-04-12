@@ -83,7 +83,7 @@ void LeftCannonCollectible::HandleCollision(Entity *player)
     game_->SpawnNotificiation("+Left Cannon");
     Weapon *left_cannon = new Weapon(CANNON, PROJECTILE_BULLET, glm::vec3(-1, 0.5, 0), game_, 0.1, "left_cannon");
     left_cannon->SetAimable(true);
-    left_cannon->SetScale(2);
+    //left_cannon->SetScale(2);
     player->AddWeapon(left_cannon);
     SetDestroyed();
 }
