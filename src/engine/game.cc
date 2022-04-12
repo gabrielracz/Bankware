@@ -76,9 +76,15 @@ int Game::Init()
 	{
 		for (int x = 0; x < world_width_; x += tile_size)
 		{
-			int r = rand() % 4;
-			GLuint bgs[] = {BACKGROUND1, BACKGROUND2, BACKGROUND3, BACKGROUND4};
-			GameObject *bkg = new GameObject(bgs[r], glm::vec3(x - world_width_ / 2, y - world_height_ / 2, 0), this);
+			GameObject* bkg;
+			if(x > world_width_*0.80 && y < world_height_*0.20){   //Bottom right corner
+				std::cout << x << world_width_/6 << std::endl;
+				bkg = new GameObject(GRID, glm::vec3(x - world_width_ / 2, y - world_height_ / 2, 0), this);
+			}else{
+				int r = rand() % 4;
+				GLuint bgs[] = {BACKGROUND1, BACKGROUND2, BACKGROUND3, BACKGROUND4};
+				bkg = new GameObject(bgs[r], glm::vec3(x - world_width_ / 2, y - world_height_ / 2, 0), this);
+			}
 			bkg->SetScale(tile_size);
 			backgrounds_.push_back(bkg);
 		}
