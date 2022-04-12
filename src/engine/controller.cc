@@ -1,5 +1,6 @@
 #include "controller.hh"
 #include "view.hh"
+#include <time.h>
 #include <string>
 
 Controller::Controller(){
@@ -21,6 +22,7 @@ Controller::Controller(){
 }
 
 int Controller::Start(){
+	srand(110);
 	float last_time = glfwGetTime();
 	float current_time = 0;
 	float delta_time = 0;
