@@ -454,6 +454,7 @@ void View::SetAllTextures(void)
     
     glGenTextures(NUM_TEXTURES, tex_);
 	SetTexture(tex_[SHIP], (resources_directory_+std::string("/amberocket.png")).c_str());
+	SetTexture(tex_[GRID], (resources_directory_+std::string("/grid.png")).c_str());
 	SetTexture(tex_[BACKGROUND1], (resources_directory_+std::string("/space1.png")).c_str());
 	SetTexture(tex_[BACKGROUND2], (resources_directory_+std::string("/space2.png")).c_str());
 	SetTexture(tex_[BACKGROUND3], (resources_directory_+std::string("/space3.png")).c_str());
