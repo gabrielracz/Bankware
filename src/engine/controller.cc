@@ -115,3 +115,11 @@ void Controller::HandleGameOver(bool t) {
 		view_->ResetUptime();
 	}
 }
+
+void Controller::HandleArcadeMode(bool t) {
+	if (t && game_->GetGameOver()) {
+		game_->ClearNotifications();
+		game_->InitArcade();
+		view_->ResetUptime();
+	}
+}

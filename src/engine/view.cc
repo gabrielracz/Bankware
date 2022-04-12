@@ -274,6 +274,12 @@ void View::KeyInput(GLFWwindow* window, int key, int scancode, int action, int m
 			controller->HandleGameOver(true);
 		}
 	}
+
+	if(key == GLFW_KEY_P) {
+		if(action == GLFW_PRESS) {
+			controller->HandleArcadeMode(true);
+		}
+	}
 }
 
 //Mouse input callback

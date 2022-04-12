@@ -52,6 +52,130 @@ Game::~Game()
 	}
 }
 
+int Game::InitArcade()
+{
+	InitPrototypes();
+	srand(time(NULL));
+	// Tile the world
+	float tile_size = 2;
+	for (int y = 0; y < world_height_; y += tile_size)
+	{
+		for (int x = 0; x < world_width_; x += tile_size)
+		{
+			GameObject* bkg;
+			if(x > world_width_*0.80 && y < world_height_*0.20){   //Bottom right corner
+				std::cout << x << world_width_/6 << std::endl;
+				bkg = new GameObject(GRID, glm::vec3(x - world_width_ / 2, y - world_height_ / 2, 0), this);
+			}else{
+				int r = rand() % 4;
+				GLuint bgs[] = {BACKGROUND1, BACKGROUND2, BACKGROUND3, BACKGROUND4};
+				bkg = new GameObject(bgs[r], glm::vec3(x - world_width_ / 2, y - world_height_ / 2, 0), this);
+			}
+			bkg->SetScale(tile_size);
+			bkg->SetInverted(true);
+			backgrounds_.push_back(bkg);
+		}
+	}
+
+	// Initialze player
+	player_ = new Entity(SHIP, glm::vec3(0, 0, 0), this, 0.45);
+	ParticleSystem *thrust = new ParticleSystem(FIRE, glm::vec3(0, -0.75, 0), player_, this);
+	player_->AddChild(thrust);
+
+	player_->AddItem(new Shield(SHIELD, glm::vec3(1.5, 0, 0), this));
+	player_->AddItem(new Shield(SHIELD, glm::vec3(1.5, 0, 0), this));
+	entities_.push_back(player_);
+
+	// Initialize random enemies
+	for (int i = 0; i < 250; i++)
+	{
+		float randx = rand() % world_width_ - (float)world_width_ / 2;
+		float randy = rand() % world_height_ - (float)world_height_ / 2;
+		entities_.emplace_back(new Enemy(ENEMY, glm::vec3(randx, randy, 0), glm::vec3(randx - rand() % 3, randy, 0), this));
+	}
+
+	for (int i = 0; i < 80; i++)
+	{
+		float randx = rand() % world_width_ - (float)world_width_ / 2;
+		float randy = rand() % world_height_ - (float)world_height_ / 2;
+		Shotgunner* s = new Shotgunner(GUNNER, glm::vec3(randx, randy, 0), glm::vec3(randx - rand() % 3, randy, 0), this);
+		s->SetScale(2.2);
+		entities_.push_back(s);
+	}
+
+	// Initialize Buoys
+	int num_buoys = 50;
+	float mass_values[] = {3, 8, 20};
+	for (int i = 0; i < num_buoys; i++)
+	{
+		float randx = rand() % world_width_ - (float)world_width_ / 2;
+		float randy = rand() % world_height_ - (float)world_height_ / 2;
+		float randmass = mass_values[rand() % 3];
+		Satellite* s = new Satellite(BUOY, glm::vec3(randx, randy, 0), this, randmass);
+		entities_.push_back(s);
+	}
+
+	// Initialize Powerups
+	for (int i = 0; i < 20; i++)
+	{
+		float randx = rand() % world_width_ - (float)world_width_ / 2;
+		float randy = rand() % world_height_ - (float)world_height_ / 2;
+		collectibles_.push_back(new Powerup(POWERUP, glm::vec3(randx, randy, 0), this));
+	}
+
+	for (int i = 0; i < 15; i++)
+	{
+		float randx = rand() % world_width_ - (float)world_width_ / 2;
+		float randy = rand() % world_height_ - (float)world_height_ / 2;
+		collectibles_.push_back(new DashCollectible(DASH, glm::vec3(randx, randy, 0), this));
+	}
+
+	for (int i = 0; i < 30; i++)
+	{
+		float randx = rand() % world_width_ - (float)world_width_ / 2;
+		float randy = rand() % world_height_ - (float)world_height_ / 2;
+		collectibles_.push_back(new BuffCollectible(BUFF, glm::vec3(randx, randy, 0), this));
+	}
+
+	for (int i = 0; i < 10; i++)
+	{
+		float randx = rand() % world_width_ - (float)world_width_ / 2;
+		float randy = rand() % world_height_ - (float)world_height_ / 2;
+		collectibles_.push_back(new PeaShooterCollectible(WEAPON_C, glm::vec3(randx, randy, 0), this));
+	}
+
+	for (int i = 0; i < 5; i++)
+	{
+		float randx = rand() % world_width_ - (float)world_width_ / 2;
+		float randy = rand() % world_height_ - (float)world_height_ / 2;
+		collectibles_.push_back(new LeftCannonCollectible(WEAPON_C, glm::vec3(randx, randy, 0), this));
+	}
+
+	for (int i = 0; i < 5; i++)
+	{
+		float randx = rand() % world_width_ - (float)world_width_ / 2;
+		float randy = rand() % world_height_ - (float)world_height_ / 2;
+		collectibles_.push_back(new RightCannonCollectible(WEAPON_C, glm::vec3(randx, randy, 0), this));
+	}
+
+	for (int i = 0; i < 1; i++)
+	{
+		float randx = rand() % world_width_ - (float)world_width_ / 2;
+		float randy = rand() % world_height_ - (float)world_height_ / 2;
+		collectibles_.push_back(new DualCannonCollectible(WEAPON_C, glm::vec3(randx, randy, 0), this));
+	}
+
+	int num_shields = 25;
+	for (int i = 0; i < num_shields; i++)
+	{
+		float randx = rand() % world_width_ - (float)world_width_ / 2;
+		float randy = rand() % world_height_ - (float)world_height_ / 2;
+		collectibles_.push_back(new ShieldCollectible(SHIELD, glm::vec3(randx, randy, 0), this));
+	}
+
+	return 0;
+}
+
 void Game::InitPrototypes(){
 	//Init effects
 	effect_prototypes_[EFFECT_EXPLOSION] = new Effect(PARTICLE_EXPLOSION, glm::vec3(0), this);
@@ -659,14 +783,26 @@ void Game::GameOver()
 	game_over_ = true;
 	ClearGame();
 	SpawnNotificiation("GAME OVER :(");
+	return;
 }
 
 void Game::ClearGame()
 {
 	backgrounds_.clear();
-	entities_.clear();
-	projectiles_.clear();
-	effects_.clear();
-	collectibles_.clear();
-	notifications_.clear();
+	for(Entity* e : entities_) {
+		e->SetDestroyed();
+	}
+	for(Projectile* p : projectiles_) {
+		p->SetDestroyed();
+	}
+	for(Collectible* c : collectibles_) {
+		c->SetDestroyed();
+	}
+	for (TextObject* t : notifications_) {
+		t->SetDestroyed();
+	}
+	for(Effect* e : effects_) {
+		e->SetDestroyed();
+	}
+	return;
 }
