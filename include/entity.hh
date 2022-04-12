@@ -6,6 +6,7 @@
 #include "weapon.hh"
 #include "item.hh"
 #include <string>
+#include <algorithm> 
 
 class Enemy;
 class Effect;
@@ -70,6 +71,9 @@ public:
 	void SetPosition(const glm::vec3& p);
 	void ReduceWeaponCooldown(float cd);
 	Hitbox& GetHitbox();
+
+	bool HasWeapon(const std::string& tag);
+	Weapon* GetWeapon(const std::string& tag);
 
 	inline float GetSpeed() const {return speed_; }
 	inline void SetSpeed(float speed) { speed_ = speed; }
