@@ -5,6 +5,8 @@
 in vec4 color_interp;
 in vec2 uv_interp;
 
+uniform bool inverted;
+
 // Texture sampler
 uniform sampler2D onetex;
 
@@ -52,7 +54,11 @@ void main()
         // Draw character
         vec4 color = texture2D(onetex, fuv);
         //gl_FragColor = vec4(color.r, color.g, color.b, color.a);
-        gl_FragColor = vec4(color.r, color.g, color.b, 1.0);
+		if(inverted){
+			gl_FragColor = vec4(color.b, color.g, color.r, 1.0);
+		}else {
+			gl_FragColor = vec4(color.r, color.g, color.b, 1.0);
+		}
 
 		 //Check for transparency
 		if(color.a < 0.77)

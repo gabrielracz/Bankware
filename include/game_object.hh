@@ -43,6 +43,7 @@ public:
 	glm::vec3 GetAngleVector(void);
 	inline bool IsDestroyed(void) { return destroyed_; }
 	inline bool IsInverted(void) {return draw_inverted_;}
+	inline void SetInverted(bool t) {draw_inverted_ = t;}
 	inline GLuint GetType() {return type_;}
 
 	

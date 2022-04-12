@@ -501,6 +501,9 @@ void Game::SpawnNotificiation(const std::string &text){
 	float push_size = 0.1;
 	TextObject* t = new TextObject(TEXT, startingpos, this, 2.0f);
 	t->SetText(text);
+	if(text[0] == '-' || text == "Block"){
+		t->SetInverted(true);
+	}
 	notifications_.push_back(t);
 	for(int i = 0; i < notifications_.size(); i++){
 		notifications_[i]->SetPosition(notifications_[i]->GetPosition() + glm::vec3(0, push_size, 0));

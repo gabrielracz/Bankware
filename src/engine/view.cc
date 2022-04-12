@@ -170,19 +170,20 @@ void View::RenderHUD(){
 
 	std::vector<TextObject*> notifs = controller_->GetNotifications();
 	for(auto n : notifs){
-		RenderText(n->GetText(), n->GetPosition());
+		RenderText(n->GetText(), n->GetPosition(), 1, n->IsInverted());
 	}
 
 
 
 }
 
-void View::RenderText(const std::string &text, glm::vec3 pos, float size){
+void View::RenderText(const std::string &text, glm::vec3 pos, float size, bool inverted){
 #define TEXT_LENGTH 15
     glBindTexture(GL_TEXTURE_2D, tex_[TEXT]);
 	shader_ = &shaders_[TEXT_SHADER];
 	shader_->Enable();
 	shader_->SetSpriteAttributes();
+	
 
 	// Set text length
 	int final_size = text.size();
@@ -201,6 +202,7 @@ void View::RenderText(const std::string &text, glm::vec3 pos, float size){
     shader_->SetUniformMat4("transformation_matrix", translation_matrix * scaling_matrix);
 	//std::cout << text << std::endl;
 
+	shader_->SetUniform1i("inverted", inverted);	
 
 	// Set the text data
 	GLint data[TEXT_LENGTH];

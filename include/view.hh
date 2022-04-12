@@ -70,7 +70,7 @@ public:
 	void SetTitle(const char* title);
 	void RenderObject(GameObject* obj, const glm::mat4& parent_matrix = glm::mat4(1));
 	void RenderParticleSystem(GameObject* obj, const glm::mat4& parent_matrix = glm::mat4(1));
-	void RenderText(const std::string& text, glm::vec3 pos, float size = 1.0f);
+	void RenderText(const std::string& text, glm::vec3 pos, float size = 1.0f, bool inverted = false);
 	void RenderHUD();
 	//void RenderText(TextObject* obj);
 	bool IsVisible(GameObject* obj, float f = 1.0f);
