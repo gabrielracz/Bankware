@@ -4,7 +4,7 @@
 Shotgunner::Shotgunner(GLuint texture, const glm::vec3 &position, const glm::vec3 &origin, Game *game, float speed) : Enemy(texture, position, origin, game, speed)
 {
     spread_amount_ = 2;
-    recoil_force_ = 1.5f;
+    recoil_force_ = 9.0f;
     Weapon *w = new Weapon(NONE, ENEMY_BULLET, glm::vec3(0), game);
     for (int i = 1; i < spread_amount_; ++i)
     {
@@ -60,10 +60,10 @@ void Shotgunner::Update(float dt)
             std::random_device rd;
             std::default_random_engine eng(rd());
             std::uniform_real_distribution<float> distr(0, 1);
-            glm::vec2 force_dir = glm::normalize(glm::vec2(player_position_delta.y, -player_position_delta.x)) * 0.5f;
-            if (distr(eng) > 0.5)
+            glm::vec2 force_dir = glm::normalize(glm::vec2(player_position_delta.y, -player_position_delta.x)) * 1.5f;
+            if (distr(eng) > 0.8)
             {
-                force_dir = glm::normalize(glm::vec2(-player_position_delta.y, player_position_delta.x)) * 0.5f;
+                force_dir = glm::normalize(glm::vec2(-player_position_delta.y, player_position_delta.x)) * 1.5f;
             }
             acceleration_ = glm::vec3(force_dir.x, force_dir.y, position_.z);
             if (shot_cooldown_counter_ <= 0)
@@ -105,5 +105,6 @@ void Shotgunner::Update(float dt)
 void Shotgunner::Shoot()
 {
     Entity::Shoot();
+    velocity_ = glm::vec3(0);
     acceleration_ = GetAngleVector() * -recoil_force_;
 }
