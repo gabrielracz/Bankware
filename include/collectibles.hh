@@ -25,6 +25,8 @@ public:
 };
 
 class WeaponCollectible : public Collectible {
+
+public:
 	WeaponCollectible(GLuint type, const glm::vec3& position, Game* game);
 	void HandleCollision(Entity* player) override;
 };
