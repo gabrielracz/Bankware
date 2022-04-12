@@ -1,8 +1,8 @@
 #ifndef DATA_H
 #define DATA_H
 #include "GL/gl.h"
-#define NUM_TEXTURES 18
 
+#define NUM_TEXTURES 18
 
 enum ObjectTypes : GLuint {
 	SHIP=0,
