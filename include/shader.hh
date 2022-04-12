@@ -37,6 +37,8 @@ public:
 	// Create geometry for particles
 	void CreateParticles(void);
 
+	void CreateParticleExplosion(void);
+
 	// Set shader attributes for sprite
 	void SetSpriteAttributes(void);
 

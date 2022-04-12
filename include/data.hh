@@ -3,6 +3,7 @@
 #include "GL/gl.h"
 #define NUM_TEXTURES 18
 
+
 enum ObjectTypes : GLuint {
 	SHIP=0,
 	BACKGROUND1,
@@ -17,6 +18,7 @@ enum ObjectTypes : GLuint {
 	POWERUP,
 	BUOY,
 	FIRE,
+	PARTICLE_EXPLOSION,
 	TEXT,
 	DASH,
 	BUFF,

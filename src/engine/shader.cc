@@ -1,3 +1,4 @@
+#define GLM_FORCE_RADIANS
 #include <iostream>
 #include <string>
 #include <glm/gtc/type_ptr.hpp>
@@ -152,7 +153,7 @@ void Shader::CreateParticles(void)
         if (i % 4 == 0){
             //theta = (two_pi*(rand() % 1000) / 1000.0f);
             theta = (2.0*(rand() % 10000) / 10000.0f -1.0f)*0.18f + pi;
-            r = 0.0f + 0.8*(rand() % 10000) / 10000.0f;
+            r = 0.4f + 1*(rand() % 10000) / 10000.0f;
             tmod = (rand() % 10000) / 10000.0f;
         }
 
@@ -176,6 +177,83 @@ void Shader::CreateParticles(void)
     GLuint manyfaces[NUM_PARTICLES * 6];
 
     for (int i = 0; i < NUM_PARTICLES; i++) {
+        for (int j = 0; j < 6; j++){
+            manyfaces[i * 6 + j] = face[j] + i * 4;
+        }
+    }
+
+    // Create buffer for vertices
+    glGenBuffers(1, &vbo_particles_);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo_particles_);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(particles), particles, GL_STATIC_DRAW);
+
+    // Create buffer for faces (index buffer)
+    glGenBuffers(1, &ebo_particles_);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo_particles_);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(manyfaces), manyfaces, GL_STATIC_DRAW);
+
+    // Set number of elements in array buffer
+    size_particles_ = sizeof(manyfaces) / sizeof(GLuint);
+}
+
+void Shader::CreateParticleExplosion(void)
+{
+
+    // Each particle is a square with four vertices and two triangles
+
+    // Number of attributes for vertices and faces
+    const int vertex_attr = 7;  // 7 attributes per vertex: 2D (or 3D) position (2), direction (2), 2D texture coordinates (2), time (1)
+                                //    const int face_att = 3; // Vertex indices (3)
+
+    GLfloat vertex[]  = {
+        // Four vertices of a square
+        // Position      Color                Texture coordinates
+        -0.5f,  0.5f,    1.0f, 0.0f, 0.0f,    0.0f, 0.0f, // Top-left
+         0.5f,  0.5f,    0.0f, 1.0f, 0.0f,    1.0f, 0.0f, // Top-right
+         0.5f, -0.5f,    0.0f, 0.0f, 1.0f,    1.0f, 1.0f, // Bottom-right
+        -0.5f, -0.5f,    1.0f, 1.0f, 1.0f,    0.0f, 1.0f  // Bottom-left
+    };
+
+    // Two triangles referencing the vertices
+    GLuint face[] = {
+        0, 1, 2, // t1
+        2, 3, 0  // t2
+    };
+
+    // Initialize all the particle vertices
+    GLfloat particles[NUM_PARTICLES*2 * vertex_attr];
+    float theta, r, tmod;
+    float pi = glm::pi<float>();
+    float two_pi = 2.0f*pi;
+
+    for (int i = 0; i < NUM_PARTICLES*2; i++){
+        if (i % 4 == 0){
+			//theta = (2.0*(rand() % 10000) / 10000.0f -1.0f)*0.18f + pi;
+			theta = fmod((two_pi*(rand() % 1000) / 1000.0f - 1.0f), two_pi);
+			r = 0.4f + 1*(rand() % 10000) / 10000.0f;
+			tmod = glm::clamp((rand() % 10000) / 10000.0f, 0.0f, pi/2);
+        }
+
+        // Position    
+        particles[i*vertex_attr + 0] = vertex[(i % 4) * 7 + 0];
+        particles[i*vertex_attr + 1] = vertex[(i % 4) * 7 + 1];
+
+        // Velocity
+        particles[i*vertex_attr + 2] = sin(theta)*r;
+        particles[i*vertex_attr + 3] = cos(theta)*r;
+
+        // Phase
+        particles[i*vertex_attr + 4] = tmod;
+
+        // Texture coordinate
+        particles[i*vertex_attr + 5] = vertex[(i % 4) * 7 + 5];
+        particles[i*vertex_attr + 6] = vertex[(i % 4) * 7 + 6];
+    }
+
+    // Initialize all the particle faces
+    GLuint manyfaces[NUM_PARTICLES*2 * 6];
+
+    for (int i = 0; i < NUM_PARTICLES*2; i++) {
         for (int j = 0; j < 6; j++){
             manyfaces[i * 6 + j] = face[j] + i * 4;
         }

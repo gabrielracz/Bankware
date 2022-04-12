@@ -16,10 +16,11 @@ class Controller;
 class GameObject;
 class TextObject;
 
-#define NUM_SHADERS 4
+#define NUM_SHADERS 5
 enum Shaders {
 	SPRITE_SHADER = 0,
 	PARTICLE_SHADER,
+	EXPLOSION_SHADER,
 	TEXT_SHADER,
 	MAP_SHADER
 };
@@ -42,7 +43,7 @@ private:
 	glm::mat4 view_matrix_;
 	glm::mat4 camera_matrix_;
 	Shader* shader_;
-	Shader shaders_[3];
+	Shader shaders_[NUM_SHADERS];
 
 	//TEXTURES
 	std::string resources_directory_ = RESOURCES_DIRECTORY;

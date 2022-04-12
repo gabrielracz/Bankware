@@ -49,10 +49,10 @@ Game::~Game()
 	}
 }
 
-void Game::InitPrototypes()
-{
-	// Init effects
-	effect_prototypes_[EFFECT_EXPLOSION] = new Effect(EXPLOSION, glm::vec3(0), this);
+void Game::InitPrototypes(){
+	//Init effects
+	effect_prototypes_[EFFECT_EXPLOSION] = new Effect(PARTICLE_EXPLOSION, glm::vec3(0), this);
+	effect_prototypes_[EFFECT_EXPLOSION]->SetScale(0.3f);
 
 	// Init Projectiles
 	projectile_prototypes_[PROJECTILE_BULLET] = new Projectile(BULLET, glm::vec3(0), 0, this);
@@ -460,10 +460,9 @@ void Game::SpawnBullet(GLuint proj_index, glm::vec3 position, float angle)
 	projectiles_.push_back(prj);
 }
 
-void Game::SpawnExplosion(GLuint eff_index, glm::vec3 position, float scale)
-{
-	Effect *ex = new Effect(*effect_prototypes_[eff_index]);
-	ex->SetScale(scale);
+void Game::SpawnExplosion(GLuint eff_index, glm::vec3 position, float scale){
+	Effect* ex = new Effect(*effect_prototypes_[eff_index]);
+	ex->SetScale(scale/4);
 	ex->SetPosition(position);
 	effects_.push_back(ex);
 }
