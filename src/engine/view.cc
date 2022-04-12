@@ -69,8 +69,12 @@ void View::Update(float dt){
 	std::vector<Effect*> effects = controller_->GetEffects();
 	for(auto eff : effects){
 		if(IsVisible(eff))
-			RenderObject(eff);
+			RenderParticleSystem(eff);
 	}
+
+	shader_ = &shaders_[SPRITE_SHADER];
+	shader_->Enable();
+	shader_->SetSpriteAttributes();
 
 	std::vector<GameObject*> backgrounds = controller_->GetBackgrounds();
 	for(auto bkg : backgrounds){
@@ -95,7 +99,7 @@ bool View::IsVisible(GameObject *obj, float f){
 
 
 void View::RenderObject(GameObject* obj, const glm::mat4& parent_matrix){
-	if(obj->GetType() == FIRE){
+	if(obj->GetType() == FIRE || obj->GetType() == PARTICLE_EXPLOSION){
 		RenderParticleSystem(obj, parent_matrix);
 		shader_ = &shaders_[SPRITE_SHADER];
 		shader_->SetSpriteAttributes();
@@ -130,7 +134,11 @@ void View::RenderObject(GameObject* obj, const glm::mat4& parent_matrix){
 }
 
 void View::RenderParticleSystem(GameObject* obj, const glm::mat4& parent_matrix){
-	shader_ = &shaders_[PARTICLE_SHADER];
+	if(obj->GetType() == FIRE)
+		shader_ = &shaders_[PARTICLE_SHADER];
+	else
+		shader_ = &shaders_[EXPLOSION_SHADER];
+		
 	shader_->Enable();
 	shader_->SetParticleAttributes();
 
@@ -319,15 +327,15 @@ int View::Init(){
     // Initialize shaders
 	shaders_[SPRITE_SHADER].Init((resources_directory_+std::string("/shaders/sprite_vertex_shader.glsl")).c_str(), (resources_directory_+std::string("/shaders/sprite_fragment_shader.glsl")).c_str());
 	shaders_[SPRITE_SHADER].CreateSprite();
-	shaders_[SPRITE_SHADER].SetSpriteAttributes();
 
 	shaders_[PARTICLE_SHADER].Init((resources_directory_+std::string("/shaders/particle_vertex_shader.glsl")).c_str(), (resources_directory_+std::string("/shaders/sprite_fragment_shader.glsl")).c_str());
 	shaders_[PARTICLE_SHADER].CreateParticles();
-	shaders_[PARTICLE_SHADER].SetParticleAttributes();
+
+	shaders_[EXPLOSION_SHADER].Init((resources_directory_+std::string("/shaders/particle_vertex_shader.glsl")).c_str(), (resources_directory_+std::string("/shaders/sprite_fragment_shader.glsl")).c_str());
+	shaders_[EXPLOSION_SHADER].CreateParticleExplosion();
 
 	shaders_[TEXT_SHADER].Init((resources_directory_+std::string("/shaders/text_vertex_shader.glsl")).c_str(), (resources_directory_+std::string("/shaders/text_fragment_shader.glsl")).c_str());
 	shaders_[TEXT_SHADER].CreateSprite();
-	shaders_[TEXT_SHADER].SetSpriteAttributes();
 
 	//shader_ = &shaders_[SPRITE_SHADER];
 	//shader_->Enable();
@@ -438,6 +446,7 @@ void View::SetAllTextures(void)
 	SetTexture(tex_[POWERUP], (resources_directory_+std::string("/powerup.png")).c_str());
 	SetTexture(tex_[BUOY], (resources_directory_+std::string("/buoy.png")).c_str());
 	SetTexture(tex_[FIRE], (resources_directory_+std::string("/fire.png")).c_str());
+	SetTexture(tex_[PARTICLE_EXPLOSION], (resources_directory_+std::string("/fire.png")).c_str());
 	SetTexture(tex_[TEXT], (resources_directory_+std::string("/charmap-cellphone_white.png")).c_str());
 	SetTexture(tex_[DASH], (resources_directory_+std::string("/dash.png")).c_str());
 	SetTexture(tex_[BUFF], (resources_directory_+std::string("/buff.png")).c_str());
