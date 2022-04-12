@@ -276,6 +276,9 @@ bool Game::CheckProjectileCollisions(Projectile *prj, float dt)
 
 		if (opp->IsDestroyed())
 			continue;
+		float prj_will_travel = prj->GetSpeed();
+		if(glm::length2(ep - pp) > prj_will_travel*prj_will_travel)
+			continue;
 		bool hit = prj->RayCircleCollision(opp->GetHitbox(), dt);
 		if (hit)
 		{
@@ -447,7 +450,7 @@ bool Game::CheckCollisions(Entity *ent, int j)
 	return false;
 }
 
-void Game::SpawnBullet(GLuint proj_index, glm::vec3 position, float angle)
+void Game::SpawnBullet(GLuint proj_index, glm::vec3& position, Hitbox* instigator, float angle)
 {
 	Projectile *prj;
 	if(proj_index == PROJECTILE_BULLET) {
@@ -457,6 +460,7 @@ void Game::SpawnBullet(GLuint proj_index, glm::vec3 position, float angle)
 	}
 	prj->SetPosition(position);
 	prj->SetAngle(angle);
+	prj->SetInstigator(instigator);
 	projectiles_.push_back(prj);
 }
 

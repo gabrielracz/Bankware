@@ -8,11 +8,11 @@
 #include <glm/trigonometric.hpp>
 #include <iostream>
 
-Weapon::Weapon(GLuint weapon_type, GLuint projectile_type, const glm::vec3& position, Game* game, glm::vec3* parent_position, float* parent_angle, float cooldown)
+Weapon::Weapon(GLuint weapon_type, GLuint projectile_type, const glm::vec3& position, Game* game, float cooldown)
 	:GameObject(weapon_type, position, game){
 
-	parent_position_ = parent_position;
-	parent_angle_ = parent_angle;
+	//parent_position_ = parent_position;
+	//parent_angle_ = parent_angle;
 	shot_base_cooldown_ = cooldown;
 	shot_cooldown_ = shot_base_cooldown_;
 	shot_timer_ = shot_cooldown_;
@@ -30,18 +30,20 @@ void Weapon::Update(float delta_time){
 
 void Weapon::Shoot(){
 	if(shot_timer_ > 0) return;
+	float parent_angle = parent_->GetAngle();
+	glm::vec3 parent_position = parent_->GetPosition();
 	
 	for(float a : shooting_angles_){
-		glm::vec3 rotated_pos = glm::rotate(position_, *parent_angle_, glm::vec3(0,0,1));   //This rotate is ok
-		game_->SpawnBullet(projectile_type_, *parent_position_ + rotated_pos, *parent_angle_ + a);
+		glm::vec3 rotated_pos = glm::rotate(position_, parent_angle, glm::vec3(0,0,1));   //This rotate is ok
+		glm::vec3 world_pos =parent_position + rotated_pos;
+		game_->SpawnBullet(projectile_type_, world_pos, &parent_->GetHitbox(), parent_angle + a);
 	}
 
 	shot_timer_ = shot_cooldown_;
 }
 
-void Weapon::Attach(glm::vec3 *p_position, float *p_angle){
-	parent_position_ = p_position;
-	parent_angle_ = p_angle;
+void Weapon::Attach(Entity* ent){
+	parent_ = ent;
 }
 
 void Weapon::SetAngle(float a){
@@ -54,10 +56,12 @@ void Weapon::SetAngle(float a){
 
 void Weapon::AimAt(glm::vec3 &target){
 	if(!aimable_) return;
-	glm::vec3 rotated_pos = glm::rotate(position_, *parent_angle_, glm::vec3(0,0,1));
-	glm::vec3 world_pos = *parent_position_ + rotated_pos;
+	float parent_angle = parent_->GetAngle();
+	glm::vec3 parent_position = parent_->GetPosition();
+	glm::vec3 rotated_pos = glm::rotate(position_, parent_angle, glm::vec3(0,0,1));
+	glm::vec3 world_pos = parent_position + rotated_pos;
 	float angle = glm::atan(target.y - world_pos.y, target.x - world_pos.x);
-	SetAngle(angle - *parent_angle_ - glm::pi<float>()/2);
+	SetAngle(angle - parent_angle - glm::pi<float>()/2);
 }
 
 void Weapon::AddShootingAngle(float a){

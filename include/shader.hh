@@ -6,7 +6,7 @@
 #include <glm/glm.hpp>
 #include "file_utils.hh"
 
-#define NUM_PARTICLES 400
+#define NUM_PARTICLES 1000
 
 class Shader {
 private:

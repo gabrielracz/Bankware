@@ -86,7 +86,7 @@ void Entity::SetEffect(GLuint eff)
 
 void Entity::AddWeapon(Weapon *wpn)
 {
-	wpn->Attach(&position_, &angle_);
+	wpn->Attach(this);
 	AddChild(wpn);
 	weapons_.push_back(wpn);
 }

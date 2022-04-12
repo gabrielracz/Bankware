@@ -58,7 +58,7 @@ public:
 	void SweepAndPruneProjectileCollisions();
 	void RemoveDestroyedObjects();
 
-	void SpawnBullet(GLuint projectile_index, glm::vec3 position, float angle);
+	void SpawnBullet(GLuint projectile_index, glm::vec3& position, Hitbox* instigator, float angle);
 	void SpawnExplosion(GLuint effect_index, glm::vec3 position, float scale);
 
 	void PlayerThrust(float dt);

@@ -10,6 +10,7 @@ Projectile::Projectile(GLuint texture, const glm::vec3 &position, float angle, G
 	lifetime_ = lifetime;
 	proj_type_ = proj_type;
 	SetScale(0.4);
+	instigator_ = nullptr;
 }
 
 void Projectile::Update(float dt){
@@ -23,13 +24,12 @@ void Projectile::Update(float dt){
 
 bool Projectile::RayCircleCollision(Hitbox& hitbox, float dt){
 	//detect collision between this ray and the given circle hitbox
-	
+	if(&hitbox == instigator_) return false;
+
 	glm::vec3 end = position_ + GetAngleVector() * speed_ * dt;
 	glm::vec3 cir = *hitbox.GetOrigin();
 	float r = hitbox.GetRadius();
 	//If the hitbox is further away than this frame's travel distance there is no collision
-	//float distance_travelled = glm::distance(position_, end);
-	//float distance_to_target = glm::distance(position_, cir) - r;
 	float distance_travelled = glm::length2(position_ - end);
 	float distance_to_target = glm::length2(position_ - cir) - r;
 	if(distance_to_target > distance_travelled){
@@ -56,9 +56,9 @@ bool Projectile::RayCircleCollision(Hitbox& hitbox, float dt){
 	if(t1 < 0 && t2 < 0)  //Collision occurs in the opposite direction to the bullet's travel
 		return false;
 
-	if(t1 < 0 || t2 < 0)  //Only one is negative, the projectile is inside the hitbox. We don't want the player shooting themselves.
-		return false;
-
+	//if(t1 < 0 || t2 < 0)  //Only one is negative, the projectile is inside the hitbox. We don't want the player shooting themselves.
+		//return false;
+	//std::cout << t1 << " " << t2 << " - " << dt << std::endl;
 	return true;   //Both of the collisions happen
 }
 
