@@ -476,6 +476,11 @@ void View::SetAllTextures(void)
 	SetTexture(tex_[WEAPON_C], (resources_directory_+std::string("/weapon_c.png")).c_str());
 	SetTexture(tex_[CANNON], (resources_directory_+std::string("/cannon.png")).c_str());
 	SetTexture(tex_[GUNNER], (resources_directory_+std::string("/gunner.png")).c_str());
+	SetTexture(tex_[REDKEY], (resources_directory_+std::string("/redkey.png")).c_str());
+	SetTexture(tex_[BLUEKEY], (resources_directory_+std::string("/bluekey.png")).c_str());
+	SetTexture(tex_[YELLOWKEY], (resources_directory_+std::string("/yellowkey.png")).c_str());
+	SetTexture(tex_[GATE_OPEN], (resources_directory_+std::string("/none.png")).c_str());
+	SetTexture(tex_[GATE_CLOSED], (resources_directory_+std::string("/none.png")).c_str());
     // glBindTexture(GL_TEXTURE_2D, tex_[0]);
 }
 

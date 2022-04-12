@@ -48,4 +48,22 @@ public:
 	LeftCannonCollectible(GLuint type, const glm::vec3& position, Game* game);
 	void HandleCollision(Entity* player) override;
 };
+
+class RedKeyCollectible : public Collectible {
+public:
+	RedKeyCollectible(GLuint type, const glm::vec3& position, Game* game);
+	void HandleCollision(Entity* player) override;
+};
+
+class BlueKeyCollectible : public Collectible {
+public:
+	BlueKeyCollectible(GLuint type, const glm::vec3& position, Game* game);
+	void HandleCollision(Entity* player) override;
+};
+
+class YellowKeyCollectible : public Collectible {
+public:
+	YellowKeyCollectible(GLuint type, const glm::vec3& position, Game* game);
+	void HandleCollision(Entity* player) override;
+};
 #endif // COLLECTIBLES_H
