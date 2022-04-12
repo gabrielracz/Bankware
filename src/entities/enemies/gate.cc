@@ -1,7 +1,7 @@
 #include "gate.hh"
 #include "game.hh"
 
-Gate::Gate(GLuint texture, const glm::vec3 &position, const glm::vec3 &origin, Game *game) : Entity(texture, position, game)
+Gate::Gate(GLuint texture, const glm::vec3 &position, Game *game) : Entity(texture, position, game)
 {
 }
 
