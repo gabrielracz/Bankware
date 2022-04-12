@@ -158,6 +158,13 @@ int Game::Init()
 		collectibles_.push_back(new BuffCollectible(BUFF, glm::vec3(randx, randy, 0), this));
 	}
 
+	for (int i = 0; i < 10; i++)
+	{
+		float randx = rand() % world_width_ - (float)world_width_ / 2;
+		float randy = rand() % world_height_ - (float)world_height_ / 2;
+		collectibles_.push_back(new WeaponCollectible(WEAPON_C, glm::vec3(randx, randy, 0), this));
+	}
+
 	// Initialize collectible shields
 	int num_shields = 30;
 	for (int i = 0; i < num_shields; i++)
