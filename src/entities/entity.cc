@@ -19,6 +19,11 @@ Entity::Entity(GLuint type, const glm::vec3 &position, Game *game, float speed, 
 	thrust_ = false;
 	power_up_cooldown_ = 0;
 	explosion_effect_ = EFFECT_EXPLOSION;
+	
+	//Health values
+	health_ = 0;
+	iframe_time_ = 0;
+	current_iframe_time_ = 0;
 }
 
 void Entity::Update(float dt)
@@ -67,7 +72,7 @@ void Entity::Update(float dt)
 	if (power_up_cooldown_ > 0)
 	{
 		power_up_cooldown_ -= dt;
-		if (power_up_cooldown_ < 0)
+		if (power_up_cooldown_ <= 0)
 		{
 			power_up_cooldown_ = 0;
 			draw_inverted_ = false;
@@ -75,6 +80,16 @@ void Entity::Update(float dt)
 			{
 				w->ResetShootingAngles();
 			}
+		}
+	}
+
+	if (current_iframe_time_ > 0)
+	{
+		current_iframe_time_ -= dt;
+		if (current_iframe_time_ < 0)
+		{
+			current_iframe_time_ = 0;
+			draw_inverted_ = false;
 		}
 	}
 }
@@ -114,7 +129,6 @@ void Entity::AddItem(Item *item)
 		++count;
 	}
 }
-
 
 void Entity::Thrust(float dt)
 {
@@ -213,10 +227,28 @@ void Entity::Explode()
 	{
 		if (!RaiseEvent("damage"))
 		{
-			game_->SpawnExplosion(explosion_effect_, position_, scale_);
-			destroyed_ = true;
+			if (TakeDamage())
+			{
+				game_->SpawnExplosion(explosion_effect_, position_, scale_);
+				destroyed_ = true;
+			}
 		}
 	}
+}
+
+bool Entity::TakeDamage()
+{
+	if (current_iframe_time_ > 0)
+	{
+		return false;
+	}
+	if(health_ > 0) {
+		--health_;
+		current_iframe_time_ = iframe_time_;
+		draw_inverted_ = true;
+		return false;
+	}
+	return true;
 }
 
 bool Entity::RaiseEvent(const std::string &event)
@@ -242,8 +274,8 @@ void Entity::PowerUp(float time)
 	}
 }
 
-
-bool Entity::GetThrust(){
+bool Entity::GetThrust()
+{
 	return thrust_;
 }
 

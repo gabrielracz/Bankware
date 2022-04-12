@@ -13,6 +13,8 @@ Satellite::Satellite(GLuint type, const glm::vec3 &position, Game *game, float m
     AddWeapon(w);
     shot_cooldown_ = 1;
     shot_cooldown_counter_ = shot_cooldown_;
+    health_ = angles;
+    iframe_time_ = 0.5;
 }
 void Satellite::Update(float dt)
 {
