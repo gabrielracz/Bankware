@@ -118,7 +118,9 @@ int Game::Init()
 	{
 		float randx = rand() % world_width_ - (float)world_width_ / 2;
 		float randy = rand() % world_height_ - (float)world_height_ / 2;
-		entities_.emplace_back(new Shotgunner(ENEMY, glm::vec3(randx, randy, 0), glm::vec3(randx - rand() % 3, randy, 0), this));
+		Shotgunner* s = new Shotgunner(GUNNER, glm::vec3(randx, randy, 0), glm::vec3(randx - rand() % 3, randy, 0), this);
+		s->SetScale(2.2);
+		entities_.push_back(s);
 	}
 
 	// Initialize Buoys
@@ -425,12 +427,9 @@ void Game::HandleEntityCollision(Entity *e1, Entity *e2)
 {
 	GLuint t1 = e1->GetType();
 	GLuint t2 = e2->GetType();
-	if ((t1 == SHIP && t2 == ENEMY) || (t1 == ENEMY && t2 == SHIP))
-	{
-		e1->Explode();
-		e2->Explode();
-	}
-	else if (t1 == BUOY || t2 == BUOY)
+
+
+	if (t1 == BUOY || t2 == BUOY)
 	{
 		// Elastic collision
 		float m1 = e1->GetMass();
@@ -452,6 +451,9 @@ void Game::HandleEntityCollision(Entity *e1, Entity *e2)
 		{
 			e1->SetPosition(e1->GetPosition() + n * (overlap * 2));
 		}
+	}else {
+		e1->Explode();
+		e2->Explode();
 	}
 }
 

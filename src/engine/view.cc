@@ -471,6 +471,7 @@ void View::SetAllTextures(void)
 	SetTexture(tex_[E_BULLET], (resources_directory_+std::string("/enemy_bullet.png")).c_str());
 	SetTexture(tex_[NONE], (resources_directory_+std::string("/none.png")).c_str());
 	SetTexture(tex_[CANNON], (resources_directory_+std::string("/cannon.png")).c_str());
+	SetTexture(tex_[GUNNER], (resources_directory_+std::string("/gunner.png")).c_str());
     // glBindTexture(GL_TEXTURE_2D, tex_[0]);
 }
 
