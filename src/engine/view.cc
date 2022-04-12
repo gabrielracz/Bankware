@@ -1,7 +1,6 @@
 #include "view.hh"
 #include <GLFW/glfw3.h>
 //#include <glm/ext/matrix_transform.hpp>
-#include <glm/ext/vector_float3.hpp>
 #include <glm/gtx/norm.hpp>
 #include <glm/gtx/quaternion.hpp>
 #include <glm/gtx/string_cast.hpp>
@@ -471,6 +470,7 @@ void View::SetAllTextures(void)
 	SetTexture(tex_[BUFF], (resources_directory_+std::string("/buff.png")).c_str());
 	SetTexture(tex_[E_BULLET], (resources_directory_+std::string("/enemy_bullet.png")).c_str());
 	SetTexture(tex_[NONE], (resources_directory_+std::string("/none.png")).c_str());
+	SetTexture(tex_[CANNON], (resources_directory_+std::string("/cannon.png")).c_str());
     // glBindTexture(GL_TEXTURE_2D, tex_[0]);
 }
 

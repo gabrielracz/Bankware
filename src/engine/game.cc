@@ -88,11 +88,13 @@ int Game::Init()
 	ParticleSystem *thrust = new ParticleSystem(FIRE, glm::vec3(0, -0.75, 0), player_, this);
 	player_->AddChild(thrust);
 
-	Weapon *right_cannon = new Weapon(BULLET, PROJECTILE_BULLET, glm::vec3(1, 0.5, 0), this);
+	Weapon *right_cannon = new Weapon(CANNON, PROJECTILE_BULLET, glm::vec3(1, 0.5, 0), this, 0.1);
+	right_cannon->SetScale(2);
 	right_cannon->SetAimable(true);
 	player_->AddWeapon(right_cannon);
-	Weapon *left_cannon = new Weapon(BULLET, PROJECTILE_BULLET, glm::vec3(-1, 0.5, 0), this);
+	Weapon *left_cannon = new Weapon(CANNON, PROJECTILE_BULLET, glm::vec3(-1, 0.5, 0), this, 0.1);
 	left_cannon->SetAimable(true);
+	left_cannon->SetScale(2);
 	player_->AddWeapon(left_cannon);
 	// Weapon* booty_cannon = new Weapon(BULLET, PROJECTILE_BULLET, glm::vec3(0.0, -1, 0), this);
 	// booty_cannon->SetAngle(glm::pi<float>());
