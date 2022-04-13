@@ -17,14 +17,14 @@ bool DashBuff::Event(const std::string& event)
 void DashBuff::Activate()
 {
 	//printf("Dash UP\n");
-	game_->SpawnNotificiation("+DashPower");
+	game_->SpawnNotificiation("+Dash Power");
     game_->GetPlayer()->RaiseEvent("buff_dash");
 }
 
 void DashBuff::Deactivate()
 {
 	//printf("Dash DOWN\n");
-	game_->SpawnNotificiation("-DashPower");
+	game_->SpawnNotificiation("-Dash Power");
     game_->GetPlayer()->RaiseEvent("debuff_dash");
 	Item::Deactivate();
 }

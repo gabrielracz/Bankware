@@ -310,7 +310,7 @@ void View::MouseInput(GLFWwindow* window, int key, int action, int mods){
 	if(key == GLFW_MOUSE_BUTTON_MIDDLE){
 		glm::vec3 cursor;
 		controller->view_->GetCursorPos(&cursor);
-		std::cout << cursor.x << ", " << cursor.y << std::endl;
+		//std::cout << cursor.x << ", " << cursor.y << std::endl;
 	}
 }
 
