@@ -102,3 +102,5 @@ for collisions against the player.
 In OpenGL coordinates, the world is 200x200 units. The camera follows the player as they travel around the world.
 The map is tiled with many different background sprites. In deep space, the star textures are chosen randomly to avoid
 repetition. In the key strongholds, the background is tiled using a grid.
+
+ON GAME OVER OR WIN PRESS "R" TO RESTART STORY MODE OR "P" TO ENTER ARCADE MODE
