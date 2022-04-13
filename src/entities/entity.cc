@@ -24,6 +24,10 @@ Entity::Entity(GLuint type, const glm::vec3 &position, Game *game, float speed, 
 	health_ = 0;
 	iframe_time_ = 0;
 	current_iframe_time_ = 0;
+	
+	//count values
+	shield_count_ = 0;
+	item_count_ = 0;
 }
 
 void Entity::Update(float dt)
@@ -132,6 +136,12 @@ void Entity::AddItem(Item *item)
 	{
 		i->SetRadiusProgress(2 * count * glm::pi<float>() / (items_to_update.size() - 1));
 		++count;
+	}
+
+	if(item->GetType() == SHIELD) {
+		++shield_count_;
+	} else {
+		++item_count_;
 	}
 }
 

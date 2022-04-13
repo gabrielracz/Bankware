@@ -1,4 +1,5 @@
 #include "item.hh"
+#include "game.hh"
 
 Item::Item(GLuint type, const glm::vec3& position, Game* game) : GameObject(type, position, game)
 {
@@ -17,6 +18,7 @@ void Item::Update(float dt)
 bool Item::Event(const std::string& event)
 {
 	if(event == "damage") {
+        game_->GetPlayer()->ReduceItemCount();
         Deactivate();
         return true;
     }

@@ -39,6 +39,9 @@ protected:
 	virtual bool TakeDamage();
 	void UpdateIFrames(float dt);
 
+	int shield_count_;
+	int item_count_;
+
 public:
 	Entity(GLuint type, const glm::vec3& position, Game* game, float speed = 0.80, float mass = 1.0f);
 
@@ -77,5 +80,12 @@ public:
 
 	inline float GetSpeed() const {return speed_; }
 	inline void SetSpeed(float speed) { speed_ = speed; }
+
+	inline int GetShieldCount() const { return shield_count_; }
+	inline int GetItemCount() const { return item_count_; }
+	inline int GetWeaponCount() const { return weapons_.size(); }
+
+	inline void ReduceShieldCount() { --shield_count_; }
+	inline void ReduceItemCount() { --item_count_; }
 };
 #endif

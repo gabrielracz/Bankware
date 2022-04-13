@@ -50,6 +50,7 @@ public:
 	~Game();
 
 	int Init();
+	int InitArcade();
 	void InitPrototypes();
 	void Update(float dt);
 	bool CheckCollisions(Entity* ent, int j);
