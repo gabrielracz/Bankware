@@ -54,6 +54,7 @@ Game::~Game()
 
 int Game::InitArcade()
 {
+	game_over_ = false;
 	InitPrototypes();
 	// Tile the world
 	float tile_size = 2;
