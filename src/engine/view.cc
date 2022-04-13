@@ -170,6 +170,14 @@ void View::RenderHUD(){
 	time << std::fixed <<  std::setprecision(3) << uptime_;
 	RenderText(time.str(), glm::vec3(-0.80, 0.94, 0));
 
+	std::stringstream item;
+	item << "U: " << controller_->GetPlayer()->GetItemCount();
+	RenderText(item.str(), glm::vec3(0.50, 0.94, 0));
+
+	std::stringstream shield;
+	shield << "S: " << controller_->GetPlayer()->GetShieldCount();
+	RenderText(shield.str(), glm::vec3(0.80, 0.94, 0), 1, true);
+
 	std::vector<TextObject*> notifs = controller_->GetNotifications();
 	for(auto n : notifs){
 		RenderText(n->GetText(), n->GetPosition(), 1, n->IsInverted());

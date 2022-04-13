@@ -8,6 +8,7 @@ bool Shield::Event(const std::string& event)
 {
 	if(event == "block") {
 		game_->SpawnNotificiation("Block");
+        game_->GetPlayer()->ReduceShieldCount();
         SetDestroyed();
         return true;
     }
