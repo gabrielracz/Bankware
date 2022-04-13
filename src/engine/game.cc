@@ -63,7 +63,7 @@ int Game::InitArcade()
 		{
 			GameObject* bkg;
 			if(x > world_width_*0.80 && y < world_height_*0.20){   //Bottom right corner
-				std::cout << x << world_width_/6 << std::endl;
+				//std::cout << x << world_width_/6 << std::endl;
 				bkg = new GameObject(GRID, glm::vec3(x - world_width_ / 2, y - world_height_ / 2, 0), this);
 			}else{
 				int r = rand() % 4;
