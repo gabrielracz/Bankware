@@ -382,7 +382,7 @@ int Game::Init()
 	{
 		float randx = rand() % world_width_ - (float)world_width_ / 2;
 		float randy = rand() % world_height_ - (float)world_height_ / 2;
-		//entities_.emplace_back(new Enemy(ENEMY, glm::vec3(randx, randy, 0), glm::vec3(randx - rand() % 3, randy, 0), this));
+		entities_.emplace_back(new Enemy(ENEMY, glm::vec3(randx, randy, 0), glm::vec3(randx - rand() % 3, randy, 0), this));
 	}
 
 	for (int i = 0; i < 50; i++)
