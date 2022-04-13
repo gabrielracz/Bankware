@@ -148,21 +148,21 @@ int Game::InitArcade()
 	{
 		float randx = rand() % world_width_ - (float)world_width_ / 2;
 		float randy = rand() % world_height_ - (float)world_height_ / 2;
-		collectibles_.push_back(new LeftCannonCollectible(WEAPON_C, glm::vec3(randx, randy, 0), this));
+		collectibles_.push_back(new LeftCannonCollectible(CANNON, glm::vec3(randx, randy, 0), this));
 	}
 
 	for (int i = 0; i < 5; i++)
 	{
 		float randx = rand() % world_width_ - (float)world_width_ / 2;
 		float randy = rand() % world_height_ - (float)world_height_ / 2;
-		collectibles_.push_back(new RightCannonCollectible(WEAPON_C, glm::vec3(randx, randy, 0), this));
+		collectibles_.push_back(new RightCannonCollectible(CANNON, glm::vec3(randx, randy, 0), this));
 	}
 
 	for (int i = 0; i < 1; i++)
 	{
 		float randx = rand() % world_width_ - (float)world_width_ / 2;
 		float randy = rand() % world_height_ - (float)world_height_ / 2;
-		collectibles_.push_back(new DualCannonCollectible(WEAPON_C, glm::vec3(randx, randy, 0), this));
+		collectibles_.push_back(new DualCannonCollectible(CANNON, glm::vec3(randx, randy, 0), this));
 	}
 
 	int num_shields = 25;
