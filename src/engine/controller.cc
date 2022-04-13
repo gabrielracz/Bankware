@@ -10,6 +10,7 @@ Controller::Controller(){
 
 	game_ = new Game(200, 200);
 	game_->Init();
+	//game_->InitArcade();
 
 	//Flags
 	running_ = true;

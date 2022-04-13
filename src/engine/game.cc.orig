@@ -55,6 +55,7 @@ Game::~Game()
 int Game::InitArcade()
 {
 	InitPrototypes();
+	srand(time(NULL));
 	// Tile the world
 	float tile_size = 2;
 	for (int y = 0; y < world_height_; y += tile_size)
@@ -147,21 +148,21 @@ int Game::InitArcade()
 	{
 		float randx = rand() % world_width_ - (float)world_width_ / 2;
 		float randy = rand() % world_height_ - (float)world_height_ / 2;
-		collectibles_.push_back(new LeftCannonCollectible(CANNON, glm::vec3(randx, randy, 0), this));
+		collectibles_.push_back(new LeftCannonCollectible(WEAPON_C, glm::vec3(randx, randy, 0), this));
 	}
 
 	for (int i = 0; i < 5; i++)
 	{
 		float randx = rand() % world_width_ - (float)world_width_ / 2;
 		float randy = rand() % world_height_ - (float)world_height_ / 2;
-		collectibles_.push_back(new RightCannonCollectible(CANNON, glm::vec3(randx, randy, 0), this));
+		collectibles_.push_back(new RightCannonCollectible(WEAPON_C, glm::vec3(randx, randy, 0), this));
 	}
 
 	for (int i = 0; i < 1; i++)
 	{
 		float randx = rand() % world_width_ - (float)world_width_ / 2;
 		float randy = rand() % world_height_ - (float)world_height_ / 2;
-		collectibles_.push_back(new DualCannonCollectible(CANNON, glm::vec3(randx, randy, 0), this));
+		collectibles_.push_back(new DualCannonCollectible(WEAPON_C, glm::vec3(randx, randy, 0), this));
 	}
 
 	int num_shields = 25;
@@ -192,6 +193,7 @@ int Game::Init()
 {
 	game_over_ = false;
 	InitPrototypes();
+	srand(time(NULL));
 	// Tile the world
 	float tile_size = 2;
 	int tiles_wide = world_width_ / tile_size;
@@ -303,56 +305,7 @@ int Game::Init()
 	collectibles_.push_back(new Powerup(POWERUP, glm::vec3(-35, 70, 0), this));
 	collectibles_.push_back(new Powerup(POWERUP, glm::vec3(-35, 90, 0), this));
 	collectibles_.push_back(new YellowKeyCollectible(YELLOWKEY, glm::vec3(-98, 98, 0), this));
-
-	//FINAL SHOWDOWN
-
-	std::uniform_real_distribution<float> z4_y(50, 100);
-	std::uniform_real_distribution<float> z4_x(50, 100);
 	
-	for(int i = 0; i < 40; i++){
-		float randy = z4_y(eng);
-		float randx = z4_x(eng);
-		entities_.emplace_back(new Enemy(ENEMY, glm::vec3(randx, randy , 0), glm::vec3(randx - rad(eng), randy, 0), this));
-	}
-
-	for (int i = 0; i < 30; i++)
-	{
-		float randy = z4_y(eng);
-		float randx = z4_x(eng);
-		float randmass = mass_values[rand() % 3];
-		Satellite* s = new Satellite(BUOY, glm::vec3(randx, randy, 0), this, randmass);
-		entities_.push_back(s);
-	}
-
-	for (int i = 0; i < 22; i++)
-	{
-		float randy = z4_y(eng);
-		float randx = z4_x(eng);
-		Shotgunner* s = new Shotgunner(GUNNER, glm::vec3(randx, randy, 0), glm::vec3(randx - rand() % 3, randy, 0), this);
-		s->SetScale(2.2);
-		entities_.push_back(s);
-	}
-
-	for (int i = 0; i < 30; i++)
-	{
-		float randy = z4_y(eng);
-		float randx = z4_x(eng);
-		collectibles_.push_back(new Powerup(POWERUP, glm::vec3(randx, randy, 0), this));
-	}
-
-	
-	
-
-	entities_.push_back(new Satellite(BUOY, glm::vec3(94, 98, 0), this, 12));
-	entities_.push_back(new Satellite(BUOY, glm::vec3(94, 95, 0), this, 12));
-	entities_.push_back(new Satellite(BUOY, glm::vec3(94, 92, 0), this, 12));
-	entities_.push_back(new Satellite(BUOY, glm::vec3(94, 89, 0), this, 12));
-	entities_.push_back(new Satellite(BUOY, glm::vec3(96, 89, 0), this, 12));
-	entities_.push_back(new Satellite(BUOY, glm::vec3(98, 89, 0), this, 12));
-	Gate* ToHeaven = new Gate(GATE_CLOSED, glm::vec3(97, 97, 0), this);
-	ToHeaven->SetScale(4);
-	entities_.push_back(ToHeaven);
-
 
 
 	// Initialze player
@@ -872,9 +825,13 @@ void Game::GameOver()
 {
 	game_over_ = true;
 	ClearGame();
+<<<<<<< HEAD
 	SpawnNotificiation("GAME OVER :(", 5.0f);
 	SpawnNotificiation("PRESS R TO RESPAWN", 5.0f);
+=======
+	SpawnNotificiation("GAME OVER :(");
 	return;
+>>>>>>> ed16c924671b5425523e5b9287ecaa3345a92e8e
 }
 
 void Game::ClearGame()
