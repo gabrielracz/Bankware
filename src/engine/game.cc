@@ -881,7 +881,9 @@ void Game::ClearGame()
 {
 	backgrounds_.clear();
 	for(Entity* e : entities_) {
-		e->SetDestroyed();
+		if (e != player_) {
+			e->SetDestroyed();
+		}
 	}
 	for(Projectile* p : projectiles_) {
 		p->SetDestroyed();
