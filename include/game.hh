@@ -66,7 +66,7 @@ public:
 
 	void SpawnBullet(GLuint projectile_index, glm::vec3& position, Hitbox* instigator, float angle);
 	void SpawnExplosion(GLuint effect_index, glm::vec3 position, float scale);
-	void SpawnNotificiation(const std::string& text);
+	void SpawnNotificiation(const std::string& text, float dur = 2.0f);
 
 	void PlayerThrust(float dt);
 	void PlayerTurn(int t, float dt);

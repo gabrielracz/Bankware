@@ -84,6 +84,8 @@ int Game::Init()
 				bkg = new GameObject(GRID, glm::vec3(x, y, 0), this);
 			}else if(x < -70 && y < -70){
 				bkg = new GameObject(GRID, glm::vec3(x, y, 0), this);
+			}else if(x < -60 && y > 40){
+				bkg = new GameObject(GRID, glm::vec3(x, y, 0), this);
 			}else{
 				int r = rand() % 4;
 				GLuint bgs[] = {BACKGROUND1, BACKGROUND2, BACKGROUND3, BACKGROUND4};
@@ -139,7 +141,46 @@ int Game::Init()
 	collectibles_.push_back(new LeftCannonCollectible(CANNON, glm::vec3(-62, -87, 0), this));
 	collectibles_.push_back(new LeftCannonCollectible(CANNON, glm::vec3(-84, -60, 0), this));
 	collectibles_.push_back(new Powerup(POWERUP, glm::vec3(-99, -98, 0), this));
+
+	//========== ZONE 3 ============================
+
+	std::uniform_real_distribution<float> z3_y(50, 100);
+	std::uniform_real_distribution<float> z3_x(-100, -50);
 	
+	for(int i = 0; i < 30; i++){
+		float randy = z3_y(eng);
+		float randx = z3_x(eng);
+		entities_.emplace_back(new Enemy(ENEMY, glm::vec3(randx, randy , 0), glm::vec3(randx - rad(eng), randy, 0), this));
+	}
+
+	float mass_values[] = {3, 8, 20};
+	for (int i = 0; i < 20; i++)
+	{
+		float randy = z3_y(eng);
+		float randx = z3_x(eng);
+		float randmass = mass_values[rand() % 3];
+		Satellite* s = new Satellite(BUOY, glm::vec3(randx, randy, 0), this, randmass);
+		entities_.push_back(s);
+	}
+
+	for (int i = 0; i < 12; i++)
+	{
+		float randy = z3_y(eng);
+		float randx = z3_x(eng);
+		Shotgunner* s = new Shotgunner(GUNNER, glm::vec3(randx, randy, 0), glm::vec3(randx - rand() % 3, randy, 0), this);
+		s->SetScale(2.2);
+		entities_.push_back(s);
+	}
+
+	collectibles_.push_back(new RightCannonCollectible(CANNON, glm::vec3(-67, 46, 0), this));
+	collectibles_.push_back(new RightCannonCollectible(CANNON, glm::vec3(-94, 60, 0), this));
+	collectibles_.push_back(new Powerup(POWERUP, glm::vec3(-91, 50, 0), this));
+	collectibles_.push_back(new Powerup(POWERUP, glm::vec3(-84, 50, 0), this));
+	collectibles_.push_back(new Powerup(POWERUP, glm::vec3(-80, 50, 0), this));
+	collectibles_.push_back(new Powerup(POWERUP, glm::vec3(-60, 50, 0), this));
+	collectibles_.push_back(new Powerup(POWERUP, glm::vec3(-35, 70, 0), this));
+	collectibles_.push_back(new Powerup(POWERUP, glm::vec3(-35, 90, 0), this));
+	collectibles_.push_back(new YellowKeyCollectible(YELLOWKEY, glm::vec3(-98, 98, 0), this));
 	
 
 
@@ -184,7 +225,7 @@ int Game::Init()
 
 	// Initialize Buoys
 	int num_buoys = 40;
-	float mass_values[] = {3, 8, 20};
+	//float mass_values[] = {3, 8, 20};
 	for (int i = 0; i < num_buoys; i++)
 	{
 		float randx = rand() % world_width_ - (float)world_width_ / 2;
@@ -266,6 +307,7 @@ void Game::Update(float dt)
 				delete ent;
 			if(ent == player_) {
 				GameOver();
+				return;
 			}
 		}
 		else
@@ -565,10 +607,10 @@ void Game::SpawnExplosion(GLuint eff_index, glm::vec3 position, float scale){
 	effects_.push_back(ex);
 }
 
-void Game::SpawnNotificiation(const std::string &text){
+void Game::SpawnNotificiation(const std::string &text, float dur){
 	glm::vec3 startingpos (0,0.65,0);
 	float push_size = 0.1;
-	TextObject* t = new TextObject(TEXT, startingpos, this, 2.0f);
+	TextObject* t = new TextObject(TEXT, startingpos, this, dur);
 	t->SetText(text);
 	if(text[0] == '-' || text == "Block"){
 		t->SetInverted(true);
@@ -659,7 +701,8 @@ void Game::GameOver()
 {
 	game_over_ = true;
 	ClearGame();
-	SpawnNotificiation("GAME OVER :(");
+	SpawnNotificiation("GAME OVER :(", 5.0f);
+	SpawnNotificiation("PRESS R TO RESPAWN", 5.0f);
 }
 
 void Game::ClearGame()
