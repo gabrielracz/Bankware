@@ -8,7 +8,6 @@ DashBuff::DashBuff(GLuint type, const glm::vec3 &position, Game *game) : Item(ty
 bool DashBuff::Event(const std::string& event)
 {
     if(event == "damage" || event == "dash_block") {
-        game_->GetPlayer()->ReduceItemCount();
         Deactivate();
         return true;
     }

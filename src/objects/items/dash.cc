@@ -27,7 +27,6 @@ bool Dash::Event(const std::string &event)
         {
             return false;
         }
-        game_->GetPlayer()->ReduceItemCount();
         Deactivate();
         return true;
     }

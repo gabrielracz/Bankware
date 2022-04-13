@@ -18,9 +18,16 @@ void Item::Update(float dt)
 bool Item::Event(const std::string& event)
 {
 	if(event == "damage") {
-        game_->GetPlayer()->ReduceItemCount();
         Deactivate();
         return true;
     }
     return false;
+}
+
+void Item::Deactivate()
+{
+    if(!destroyed_) {
+        game_->GetPlayer()->ReduceItemCount();
+    }
+    SetDestroyed();
 }

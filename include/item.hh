@@ -15,7 +15,7 @@ public:
     //At first had Activate and Deactivate taking an Entity* player but include headers didnt like the recursion and gave errors
     //Will just have to use the GetPlayer() function on the game value :)
     inline virtual void Activate() {};
-    inline virtual void Deactivate() { SetDestroyed(); };
+    virtual void Deactivate();
     virtual bool Event(const std::string& event);
 
     inline void SetRadiusProgress(float p) { path_tracker_ = p; } 
