@@ -30,7 +30,9 @@ void Weapon::Update(float delta_time){
 }
 
 void Weapon::Shoot(){
-	if(shot_timer_ > 0) return;
+	if(shot_timer_ > 0){
+		return;
+	}
 	float parent_angle = parent_->GetAngle();
 	glm::vec3 parent_position = parent_->GetPosition();
 	
