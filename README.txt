@@ -11,6 +11,10 @@ CONTROLS:
 - Left-Click to shoot
 - Right-Click to dash
 
+At GameOver / Win screen:
+- R to respawn
+- P to play arcade mode
+
 WALKTHROUGH
 Once the player has collected all 3 keys and destroyed the Gate of Destiny they win.
 The player is protected with shields, which act like health. When you get hit, a shield is consumed.
