@@ -333,7 +333,7 @@ int Game::Init()
 		entities_.push_back(s);
 	}
 
-	for (int i = 0; i < 30; i++)
+	for (int i = 0; i < 15; i++)
 	{
 		float randy = z4_y(eng);
 		float randx = z4_x(eng);
