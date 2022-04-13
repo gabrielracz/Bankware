@@ -15,8 +15,9 @@ void PeaShooterCollectible::HandleCollision(Entity *player)
         return;
     }
     game_->SpawnNotificiation("+Pea Shooter");
-    Weapon *w = new Weapon(CANNON, PROJECTILE_BULLET, glm::vec3(0, 0.5, 0), game_, 0.5f, "pea");
+    Weapon *w = new Weapon(BULLET, PROJECTILE_BULLET, glm::vec3(0, 0.7, 0), game_, 0.5f, "pea");
     w->SetAimable(true);
+	w->SetScale(0.6);
     player->AddWeapon(w);
     SetDestroyed();
 }
