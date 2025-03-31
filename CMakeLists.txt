@@ -93,7 +93,8 @@ include_directories(${OPENGL_INCLUDE_DIR})
 target_link_libraries(${PROJ_NAME} ${OPENGL_gl_LIBRARY})
 
 # Other libraries needed
-set(LIBRARY_PATH "" CACHE PATH "Folder with GLEW, GLFW, GLM, and SOIL libraries")
+#set(LIBRARY_PATH "libs/" CACHE PATH "Folder with GLEW, GLFW, GLM, and SOIL libraries")
+set(LIBRARY_PATH "libs/")
 include_directories(${LIBRARY_PATH}/include)
 if(NOT WIN32)
     find_library(GLEW_LIBRARY GLEW)
